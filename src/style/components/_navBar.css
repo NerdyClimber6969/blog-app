@@ -1,0 +1,13 @@
+.nav-bar ul {
+    gap: var(--spacing6);
+    font-size: large;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (max-width: 900px) {
+    .nav-bar ul {
+        gap: var(--spacing5);
+    }
+}

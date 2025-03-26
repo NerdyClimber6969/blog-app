@@ -1,0 +1,27 @@
+.authen-content {
+    height: 305px;
+    width: clamp(800px, 70%, 1000px);
+    gap: var(--spacing7)
+}
+
+.authen-page .form-section {
+    flex: 1;
+}
+
+@media (max-width: 900px) {
+    .authen-page > .container {
+        margin: auto auto;
+        flex-direction: column;
+        gap: var(--spacing7);
+        width: 80%;
+    }
+
+    .authen-page .hero-section {
+        display: none;
+    }
+    
+    .authen-page .form-section {
+        flex: 1;
+        width: 100%;
+    }
+}

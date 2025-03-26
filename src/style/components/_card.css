@@ -1,0 +1,30 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing5);
+
+    border-radius: var(--radius-box);
+    align-items: stretch;
+    background-color: var( --color-base-100);
+}
+
+.card-content-section {
+    text-align: center;
+}
+
+.card-attribution-section {
+    text-align: right;
+    padding: var(--spacing3) 0;
+    padding-right: 0;
+}
+
+.card-image {
+    border-radius: var(--radius-box);
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-weight: bold;
+}

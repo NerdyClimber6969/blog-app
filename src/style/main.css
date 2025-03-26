@@ -1,0 +1,27 @@
+/* Base styles - foundational styling */
+@import "base/_reset.css";
+@import "base/_variables.css";
+@import "base/_global.css";
+@import "base/_typography.css";
+
+/* Layout - structural components used across the site */
+@import "layout/_layout.css";
+@import "layout/_header.css";
+
+/* Pages - page specific syle */
+@import "pages/_authen.css";
+@import "pages/_posts.css";
+@import "pages/_home.css";
+
+/* Components - reusable UI elements */
+@import "components/_input.css";
+@import "components/_navBar.css";
+@import "components/_notification.css";
+@import "components/_card.css";
+@import "components/_skeletion.css";
+@import "components/_hero.css";
+@import "components/_swiper.css";
+@import "components/_footer.css";
+
+/* Utilities - helper classes */
+@import "utils/_animations.css";

@@ -1,0 +1,35 @@
+.swiper {
+    display: flex;
+    justify-content: center;   
+    align-items: center; 
+}
+
+.swiper-content {
+    --items-per-screen: 3;
+    display: flex;
+    /* max-width: 100%; */
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.swiper-item {
+    padding: var(--spacing3);
+    flex: 0 0 calc(100% / var(--items-per-screen));
+    min-width: calc(100% / var(--items-per-screen));
+}
+
+.swiper-btn {
+    z-index: 1;
+}
+
+@media (max-width: 1000px) {
+    .swiper-item {
+        --items-per-screen: 2
+    }
+}
+
+@media (max-width: 700px) {
+    .swiper-item {
+        --items-per-screen: 1
+    }
+}
