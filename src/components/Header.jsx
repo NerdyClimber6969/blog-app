@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuthen } from '../context/AuthenProvider.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 function Header(props) {
     const { user, handleLogout } = useAuthen();
@@ -8,7 +9,6 @@ function Header(props) {
         <header>
             <div>
                 <h1 className='font-lg'>DevBlog</h1>
-                <img></img>
             </div>
             <nav className="nav-bar">
                 <ul>
@@ -25,6 +25,7 @@ function Header(props) {
                             <li className='font-sm'><Link to='/sign-up'>Sign Up</Link></li>
                         </>   
                     )}
+                    <ThemeToggle/>
                 </ul>
             </nav>
         </header>

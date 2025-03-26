@@ -1,7 +1,5 @@
-
-
 div.skeleton {
-    background:  hsl(200, 2%, 25%);
+    background:  var(--color-skeleton);
     border-radius: var(--radius-box);
     position: relative;
 }
@@ -10,11 +8,7 @@ div.skeleton::before {
     position: absolute;
     content: '';
     left: 0;
-    background: linear-gradient(
-        90deg, hsla(200, 2%, 25%, 0) 42%, 
-        hsla(210, 2%, 30%, 0.7) 50%, 
-        hsla(200, 2%, 25%, 0) 58%
-    ); 
+    background: var(--color-skeleton-loading);
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;

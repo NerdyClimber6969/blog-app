@@ -1,5 +1,4 @@
 .authen-content {
-    height: 305px;
     width: clamp(800px, 70%, 1000px);
     gap: var(--spacing7)
 }
