@@ -1,0 +1,20 @@
+.tabs-pane {
+    overflow-y: auto;
+    max-height: 610px;
+    padding-right: var(--spacing3);
+}
+
+.tabs button {
+    background-color: transparent;
+    padding: var(--spacing3);
+}
+
+.tabs button:hover {
+    background-color: var(--color-primary);
+}
+
+.tabs-header {
+    display: flex;
+    gap: var(--spacing4);
+    border-bottom: solid var(--border) hsl(213, 5%, 39%);
+}

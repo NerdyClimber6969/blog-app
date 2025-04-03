@@ -1,0 +1,36 @@
+.record-card {
+    max-width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--spacing4);
+    padding: var(--spacing4);
+    margin-top: var(--spacing3);
+}
+
+.record-card .post-title {
+    font-weight: bold;
+}
+
+.record-card .card-content-section,
+.record-card .record-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.record-card .card-attribution-section {
+    align-items: center;
+    gap: var(--spacing4)
+}
+
+.record-card .svg-icon {
+    width: 20px;
+    stroke-width: 0.7px;
+}
+
+.record-card .like, 
+.record-card .dislike {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing2);
+}

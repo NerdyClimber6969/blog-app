@@ -24,6 +24,9 @@
 @import "components/_flyOut.css";
 @import "components/cards/_userCard.css";
 @import "components/cards/_postCard.css";
+@import "components/cards/_recordCard.css";
+@import "components/_tabs.css";
+@import "components/_svgIcon.css";
 
 /* Utilities - helper classes */
 @import "utils/_animations.css";
