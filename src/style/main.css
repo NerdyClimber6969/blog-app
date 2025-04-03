@@ -17,12 +17,13 @@
 @import "components/_input.css";
 @import "components/_navBar.css";
 @import "components/_notification.css";
-@import "components/_card.css";
 @import "components/_skeletion.css";
 @import "components/_hero.css";
 @import "components/_swiper.css";
 @import "components/_footer.css";
 @import "components/_flyOut.css";
+@import "components/cards/_userCard.css";
+@import "components/cards/_postCard.css";
 
 /* Utilities - helper classes */
 @import "utils/_animations.css";

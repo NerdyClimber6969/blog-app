@@ -1,0 +1,28 @@
+@import "./_card.css";
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.post-card .card-content-section {
+    text-align: center;
+}
+
+.post-card .card-attribution-section {
+    text-align: right;
+    padding: var(--spacing3) 0;
+    padding-right: 0;
+}
+
+.post-card .post-image {
+    border-radius: var(--radius-box);
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+.post-card .post-title {
+    font-weight: bold;
+}
