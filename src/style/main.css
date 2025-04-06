@@ -12,6 +12,7 @@
 @import "pages/_authen.css";
 @import "pages/_posts.css";
 @import "pages/_home.css";
+@import "pages/_profile.css";
 
 /* Components - reusable UI elements */
 @import "components/_input.css";

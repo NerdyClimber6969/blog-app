@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuthen } from '../context/AuthenProvider.jsx';
-import ThemeToggle from './ThemeToggle.jsx';
+import ThemeToggle from './fly-out/ThemeToggle.jsx';
 
 function Header(props) {
     const { user, handleLogout } = useAuthen();
@@ -16,7 +16,7 @@ function Header(props) {
                     <li className='font-sm'><Link to='/posts'>Posts</Link></li>
                     {user ? (
                         <>
-                            <li className='font-sm'><Link to='/profile'>Profile</Link></li>
+                            <li className='font-sm'><Link to='/profiles'>Profile</Link></li>
                             <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>
                         </>
                     ) : (    
