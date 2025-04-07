@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuthen } from '../context/AuthenProvider.jsx';
 import { useNotifications } from '../context/NotificationProvider.jsx';
 import { useNavigate } from 'react-router-dom';
+import '../style/components/_input.css';
 
 function SignUpForm(props) {
     const defaultFormData = {        

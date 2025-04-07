@@ -3,12 +3,12 @@
     padding: 0;
 }
 
-.fly-out-icon {
+/* .fly-out-icon {
     width: 35px;
     height: 100%;
     fill: var(--color-base-content);
     stroke: var(--color-base-content);
-}
+} */
 
 .fly-out-toggle {
     position: relative;

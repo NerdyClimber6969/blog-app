@@ -1,4 +1,5 @@
-import SignUpForm from '../components/SignUpForm.jsx'
+import SignUpForm from '../components/SignUpForm.jsx';
+import '../style/pages/_authen.css';
 
 function SignUpPage(props) {
     return (

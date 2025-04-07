@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuthen } from '../context/AuthenProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../context/NotificationProvider.jsx';
+import '../style/components/_input.css';
 
 function LoginForm(props) {
     const navigate = useNavigate()

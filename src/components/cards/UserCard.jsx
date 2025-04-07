@@ -1,4 +1,5 @@
 import Card from './Card.jsx';
+import '../../style/components/cards/_userCard.css';
 
 function UserCard({ username, firstName, lastName, status, src }) {
     return (

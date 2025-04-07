@@ -1,4 +1,5 @@
 import React from "react";
+import '../style/components/_hero.css';
 
 function Hero({ title, text, children }) {
     const actionComponent = React.Children.toArray(children).find((child) => 

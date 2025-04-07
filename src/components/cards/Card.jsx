@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../style/components/cards/_card.css';
 
 function Card({ className, children }) {
     const imageSection = React.Children.toArray(children).find(

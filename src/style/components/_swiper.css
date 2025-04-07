@@ -7,7 +7,6 @@
 .swiper-content {
     --items-per-screen: 3;
     display: flex;
-    /* max-width: 100%; */
     overflow: hidden;
     flex-grow: 1;
 }

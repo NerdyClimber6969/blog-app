@@ -1,6 +1,8 @@
-function Skeleton(props) {
+import '../style/components/_skeletion.css';
+
+function PostCardSkeleton(props) {
     return (
-        <article className='card skeleton'>
+        <article className='post-card card skeleton'>
             <section className="card-image-section mb5">
                 <div className='skeleton skeleton-image'></div>
             </section>
@@ -17,7 +19,7 @@ function Skeleton(props) {
                 <div className='skeleton skeleton-attribution'></div>
             </section>     
         </article>
-    )
-}
+    );
+};
 
-export default Skeleton;
+export default PostCardSkeleton;

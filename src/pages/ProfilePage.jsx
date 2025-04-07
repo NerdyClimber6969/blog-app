@@ -3,6 +3,7 @@ import RecordCard from '../components/cards/RecordCard.jsx';
 import Tabs from '../components/Tabs.jsx';
 import { useEffect, useState } from 'react';
 import { useNotifications } from '../context/NotificationProvider.jsx';
+import '../style/pages/_profile.css';
 
 function ProfilePage() {
     const { setNotifications } = useNotifications();

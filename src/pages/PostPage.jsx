@@ -1,7 +1,8 @@
 import usePosts from '../hook/usePosts.jsx';
-import Card from '../components/Card.jsx';
-import Hero from '../components/Hero.jsx'
-import Skeleton from '../components/Skeleton.jsx';
+import PostCard from '../components/cards/PostCard.jsx';
+import PostCardSkeleton from '../components/PostCardSkeleton.jsx';
+import Hero from '../components/Hero.jsx';
+import '../style/pages/_posts.css';
 
 function PostPage(props) {
     const { data: posts, loading } = usePosts();
@@ -29,25 +30,24 @@ function PostPage(props) {
                                 className='card-container' 
                                 key={index}
                             > 
-                                <Skeleton />                                   
+                                <PostCardSkeleton />                                   
                             </div>
                         )) 
                     ) : (
                         posts.map((post) => (
-                            <div className='card-container' key={post.id}> 
-                                <Card
-                                    id={post.id}
-                                    title={post.title}
-                                    summary={post.summary}
-                                    author={post.author.username}
-                                    date={new Date(post.createdAt).toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric'
-                                    })}
-                                    cardImageUrl='/fff.jpg'
-                                />
-                            </div>
+                            <PostCard
+                                key={post.id}
+                                id={post.id}
+                                title={post.title}
+                                summary={post.summary}
+                                author={post.author.username}
+                                date={new Date(post.createdAt).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })}
+                                imgSrc='/fff.jpg'
+                            />
                         ))                            
                     )}
                 </div>                

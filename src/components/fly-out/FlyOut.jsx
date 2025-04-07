@@ -1,4 +1,5 @@
 import { useState, createContext, useContext, useRef, useEffect } from 'react';
+import '../../style/components/_flyOut.css';
 
 const FlyOutContext = createContext();
 

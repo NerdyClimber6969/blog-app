@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../style/components/_tabs.css';
 
 function Tabs({ children, defaultActiveTab=0 }) {
     const [activeTab, setActiveTab] = useState(defaultActiveTab);

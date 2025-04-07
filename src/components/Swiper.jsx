@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import Skeleton from '../components/Skeleton.jsx';
+import '../style/components/_swiper.css';
 
-function Swiper({ fetchData, render }) {
+function Swiper({ fetchData, render, skeletonRender }) {
     const { data: items, loading } = fetchData();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [containerWidth, setContainerWidth] = useState();
@@ -56,7 +56,7 @@ function Swiper({ fetchData, render }) {
                             className='swiper-item' 
                             key={index}
                         > 
-                            <Skeleton />                                   
+                            {skeletonRender()}                                
                         </div>
                     ))
                 ) : (
@@ -83,7 +83,7 @@ function Swiper({ fetchData, render }) {
                     &gt;
             </button>
         </div>
-    )
+    );
 };
 
 export default Swiper;

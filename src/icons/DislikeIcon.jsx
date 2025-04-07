@@ -1,3 +1,5 @@
+import '../style/components/_svgIcon.css';
+
 function DislikeIcon({ className }) {
     return (
         <svg 

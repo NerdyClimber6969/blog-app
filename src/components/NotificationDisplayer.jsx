@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNotifications } from '../context/NotificationProvider.jsx';
+import '../style/components/_notification.css'
 
 function Notification({ id, message, onRemove, isClosing, type}) {
     return (

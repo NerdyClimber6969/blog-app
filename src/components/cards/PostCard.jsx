@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Card from './Card.jsx';
+import '../../style/components/cards/_postCard.css';
 
 function PostCard({ id, title, summary, author, date, imgSrc }) {
     return (

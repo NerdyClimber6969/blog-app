@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useAuthen } from '../context/AuthenProvider.jsx';
 import ThemeToggle from './fly-out/ThemeToggle.jsx';
+import '../style/components/_header.css';
+import '../style/components/_navBar.css';
 
 function Header(props) {
     const { user, handleLogout } = useAuthen();

@@ -1,4 +1,5 @@
-import LoginForm from '../components/LoginForm.jsx'
+import LoginForm from '../components/LoginForm.jsx';
+import '../style/pages/_authen.css';
 
 function LoginPage(props) {
     return (

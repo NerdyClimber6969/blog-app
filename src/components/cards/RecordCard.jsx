@@ -1,6 +1,7 @@
 import Card from './Card.jsx';
 import LikeIcon from '../../icons/LikeIcon.jsx';
 import DislikeIcon from '../../icons/DislikeIcon.jsx';
+import '../../style/components/cards/_recordCard.css';
 
 function RecordCard({ title, author, text, createdAt, like, dislike }) {
     return (
