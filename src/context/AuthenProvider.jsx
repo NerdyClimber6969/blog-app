@@ -7,6 +7,7 @@ const AuthenContext = createContext();
 
 function AuthenProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [initialized, setInitialized] = useState(false);
     const { createNotification, handleSetNotifications } = useNotifications();
     const navigate = useNavigate();
 
@@ -17,7 +18,8 @@ function AuthenProvider({ children }) {
                 if (user !== null) {
                     setUser(null);  
                 };
-                return;
+
+                return ;
             };
     
             const decodedToken = decodeToken(token);
@@ -26,9 +28,12 @@ function AuthenProvider({ children }) {
             } else if (!user) {
                 setUser(decodedToken.payload.username);
             };
+
+            return;
         };
 
         validateToken();
+        setInitialized(true);
         const intervalTimerId = setInterval(validateToken, 1000 * 60);
         return () => clearInterval(intervalTimerId);
     }, []);
@@ -45,6 +50,7 @@ function AuthenProvider({ children }) {
             user, 
             setUser, 
             handleLogout,
+            initialized
         }}>
             { children }
         </AuthenContext.Provider>
