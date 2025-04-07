@@ -4,6 +4,7 @@ import Tabs from '../components/Tabs.jsx';
 import { useEffect, useState } from 'react';
 import { useNotifications } from '../context/NotificationProvider.jsx';
 import '../style/pages/_profile.css';
+import API from '../services/apiService.js';
 
 function ProfilePage() {
     const { setNotifications } = useNotifications();
@@ -12,38 +13,19 @@ function ProfilePage() {
 
     useEffect(() => {
         const handleFetchProfile = async() => {
-            const token = localStorage.getItem('accessToken');
+            const json = await API.getProfile();
 
-            try {
-                const response = await fetch('http://localhost:3000/profiles', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                const json = await response.json();
-                console.log(json);
-                if (!json.success) {
-                    return setNotifications(json.errors.map((error) => ({
-                        message: error.message,
-                        id: 1,
-                        isClosing: false,
-                        type: 'error'
-                    })));
-                };
-
-                setLoading(false);
-                setProfile(json.profile);
-            } catch (error) {
-                console.error(error);
-                setNotifications([{
-                    message: "Failed to fetch posts",
+            if (!json.success) {
+                return setNotifications(json.errors.map((error) => ({
+                    message: error.message,
                     id: 1,
                     isClosing: false,
                     type: 'error'
-                }]);
-            }
+                })));
+            };
+
+            setLoading(false);
+            setProfile(json.profile);
         };
 
         handleFetchProfile();

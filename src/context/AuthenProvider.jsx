@@ -7,7 +7,7 @@ const AuthenContext = createContext();
 
 function AuthenProvider({ children }) {
     const [user, setUser] = useState(null);
-    const { setNotifications } = useNotifications();
+    const { createNotification, handleSetNotifications } = useNotifications();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,36 +33,10 @@ function AuthenProvider({ children }) {
         return () => clearInterval(intervalTimerId);
     }, []);
 
-    async function signUp(firstName, lastName, username, password, confirm) {
-        const response = await fetch('http://localhost:3000/sign-up', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ firstName, lastName, username, password, confirm })
-        });
-    
-        const json = await response.json();
-        return json;
-    };
-
-    async function login(username, password) {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
-    
-        const json = await response.json();
-        return json;
-    };
-
     function handleLogout(path='/', message='You have been safely logged out.') {
         localStorage.removeItem('accessToken');
         setUser(null);
-        setNotifications([{ message: message, id: 1, isClosing: false, type: 'success'}]);   
+        handleSetNotifications(createNotification(message, 'success'));   
         return navigate(path);
     };
 
@@ -70,8 +44,6 @@ function AuthenProvider({ children }) {
         <AuthenContext.Provider value={{
             user, 
             setUser, 
-            signUp,
-            login,
             handleLogout,
         }}>
             { children }

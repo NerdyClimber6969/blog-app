@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { useAuthen } from '../context/AuthenProvider.jsx';
 import { useNotifications } from '../context/NotificationProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 import '../style/components/_input.css';
+import API from '../services/apiService.js';
 
 function SignUpForm(props) {
     const defaultFormData = {        
@@ -14,8 +14,7 @@ function SignUpForm(props) {
     };
 
     const navigate = useNavigate()
-    const { signUp } = useAuthen();
-    const { setNotifications } = useNotifications();
+    const { handleSetNotifications, createNotification } = useNotifications();
     const [formData, setFormData] = useState(defaultFormData);
     const formRef = useRef(null);
     const submitBtnRef = useRef(null);
@@ -68,29 +67,18 @@ function SignUpForm(props) {
         return setFormData({...formData, [key]: value});
     };
 
-    async function handleSignUp(e, { firstName, lastName, username, password, confirm }) {
+    async function handleSignUp(e, formData) {
         e.preventDefault();
 
-        const response = await signUp(firstName, lastName, username, password, confirm);
-
+        const response = await API.signUp(formData);
         if (response.success) {
-            setNotifications([{
-                message: 'Register successfully, you can now login.',
-                id: 1,
-                isClosing: false,
-                type: 'success'
-            }]);
+            handleSetNotifications(createNotification('Register successfully, you can now login.', 'success'));
             return navigate('/login');
         };
 
-        return setNotifications(response.errors.map((error, index) => {
-            return {
-                message: error.msg || error.message, 
-                id: index,
-                isClosing: false,
-                type: 'error'
-            };
-        }));
+        return handleSetNotifications(response.errors.map((error) => 
+            createNotification(error.msg || error.message, 'error')
+        ));
     };
 
     return (

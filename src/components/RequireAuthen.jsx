@@ -5,18 +5,13 @@ import { useNotifications } from '../context/NotificationProvider.jsx';
 
 function RequireAuth({ children }) {
     const { user } = useAuthen();
-    const { setNotifications } = useNotifications();
+    const { handleSetNotifications, createNotification } = useNotifications();
     const location = useLocation();
-    console.log(user)
+
     useEffect(() => {
         if (!user) {
-            setNotifications([{ 
-                message: 'Please login before continue', 
-                id: Date.now(), // Use unique ID
-                isClosing: false, 
-                type: 'error'
-            }]);
-        }
+            handleSetNotifications(createNotification('Please login before continue', 'error'));
+        };
     }, []);
 
     if (!user) {

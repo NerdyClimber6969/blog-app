@@ -3,33 +3,29 @@ import { useAuthen } from '../context/AuthenProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../context/NotificationProvider.jsx';
 import '../style/components/_input.css';
+import API from '../services/apiService.js';
 
 function LoginForm(props) {
     const navigate = useNavigate()
-    const { login, setUser } =  useAuthen();
-    const { setNotifications } = useNotifications();
+    const { setUser } =  useAuthen();
+    const { handleSetNotifications, createNotification } = useNotifications();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin(e, username, password) {
         e.preventDefault();
         
-        const response = await login(username, password);
+        const response = await API.login({ username, password });
 
         if (!response.success) {
-            return setNotifications(response.errors.map((error, index) => {
-                return {
-                    message: error.msg || error.message, 
-                    id: index,
-                    isClosing: false,
-                    type: 'error'
-                };
-            }));
+            return handleSetNotifications(response.errors.map((error, index) => 
+                createNotification(error.msg || error.message, 'error')
+            ));
         };
 
         localStorage.setItem('accessToken', response.token);
         setUser(username);
-        setNotifications([{ message: 'Login successfully', id: 1, isClosing: false, type: 'success'}]);
+        handleSetNotifications(createNotification('Login successfully', 'success'));
         return navigate('/');
     };
 
