@@ -1,20 +1,21 @@
 import AuthenProvider  from '../context/AuthenProvider.jsx';
 import NotificationProvider  from '../context/NotificationProvider.jsx';
-import NotificationDisplayer from '../components/NotificationDisplayer.jsx';
-import Header from '../components/Header.jsx';
-import Footer from '../components/Footer.jsx';
+import NotificationDisplayer from '../NotificationDisplayer.jsx';
+import Header from '../components/Header/Header.jsx';
+import Footer from '../components/Footer/Footer.jsx';
 import { Outlet } from 'react-router-dom';
+import styles from './RootLayout.module.css';
 
 const RootLayout = () => {
     return (
       <NotificationProvider>
         <AuthenProvider>
             <NotificationDisplayer/>
-            <div className='root-layout'>
+            <div className={styles.pageLayout}>
               <Header />
-              <main>
+              <div className={styles.mainLayout}>
                 <Outlet />           
-              </main>
+              </div>
               <Footer />
             </div>
         </AuthenProvider>  

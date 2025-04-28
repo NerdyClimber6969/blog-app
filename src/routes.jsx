@@ -1,8 +1,8 @@
 import RootLayout from './layout/RootLayout.jsx';
-import HomePage from './pages/HomePage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import SignUpPage from './pages/SignUpPage.jsx';
-import PostPage from './pages/PostPage.jsx';
+import HomePage from './pages/HomePage/HomePage.jsx';
+import LoginPage from './pages/LoginPage/LoginPage.jsx';
+import SignUpPage from './pages/SignUpPage/SignUpPage.jsx';
+import PostPage from './pages/PostPage/PostPage.jsx';
 
 const routes = [
     {

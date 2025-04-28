@@ -1,0 +1,24 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+    margin-top: var(--spacing7);
+    gap: var(--spacing7);
+
+    @media (max-width: 900px) {
+        display: block;
+    }
+}
+
+.heroSection {
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.formSection {
+    flex: 1;
+    
+    @media (max-width: 900px) {
+        width: 100%;
+    }
+}

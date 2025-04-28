@@ -1,0 +1,26 @@
+.postCard {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.image {
+    border-radius: var(--radius-box);
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+.content {
+    text-align: center;
+}
+
+.attribution {
+    text-align: right;
+    padding: var(--spacing3) 0;
+    padding-right: 0;
+}
+
+.title {
+    font-weight: bold;
+}

@@ -1,0 +1,30 @@
+.swiper {
+    display: flex;
+    justify-content: center;   
+    align-items: center; 
+}
+
+.content {
+    --items-per-screen: 3;
+    display: flex;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.item {
+    padding: var(--spacing3);
+    flex: 0 0 calc(100% / var(--items-per-screen));
+    min-width: calc(100% / var(--items-per-screen));
+
+    @media (max-width: 1000px) {
+        --items-per-screen: 2
+    }
+
+    @media (max-width: 700px) {
+        --items-per-screen: 1
+    }
+}
+
+.btn {
+    z-index: 1;
+}
