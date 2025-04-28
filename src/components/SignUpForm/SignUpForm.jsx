@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../context/NotificationProvider.jsx';
-import '../Input/Input.css';
+import Input from '../Input/Input.jsx';
 import API from '../../services/apiService.js';
 
 function SignUpForm(props) {
@@ -16,47 +16,24 @@ function SignUpForm(props) {
     const navigate = useNavigate()
     const { handleSetNotifications, createNotification } = useNotifications();
     const [formData, setFormData] = useState(defaultFormData);
+    const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
     const formRef = useRef(null);
-    const submitBtnRef = useRef(null);
 
-    useEffect(() => {
-        function validateForm() {
+    useEffect(() => {   
+        const isValidForm = () => {
             const inputs = Array.from(formRef.current.querySelectorAll('input'));
-            let password, confirm;
-            let valid = true;
-
             for (const input of inputs) {
-                if (input.id === 'password') password = input;
-                if (input.id === 'confirm') {
-                    confirm = input;
-                    continue;
-                };
-
                 if (!input.validity.valid) {
-                    input.classList.add('invalid');
-                    valid = false;
-                } else {
-                    input.classList.remove('invalid');
+                    return false;
                 };
             };
-    
-            if (password.value !== confirm.value || confirm.value === '') {
-                confirm.classList.add('invalid');
-                valid = false;
-            } else {
-                confirm.classList.remove('invalid');
-            };
 
-            return valid;
+            return true;
         };
 
-        const valid = validateForm();
-        if (valid) { 
-            submitBtnRef.current.disabled = false;
-        } else {
-            submitBtnRef.current.disabled = true;
-        };
-        
+        const isValid = isValidForm();
+        setSubmitBtnDisabled(!isValid)
+
         return;
     }, [formData]);
 
@@ -84,54 +61,74 @@ function SignUpForm(props) {
     return (
         <>
             <form className='sign-up-form' ref={formRef}>
-                <div className='container input-container' data-help='i.e. Ben'> 
-                    <div className='font-sm'>
-                        <input 
-                            className='font-sm' type='text' id='firstName' name='firstName' pattern='[a-zA-Z]+' placeholder='First Name' required
-                            value={formData.firstName} onChange={(e) => handleFormUpdate(e)}
-                        />
-                        <label className='font-sm' htmlFor='firstName'>First Name</label>
-                    </div>                  
-                </div>     
-                <div className='container input-container' data-help='i.e. Wong'>
-                    <div className='font-sm'>
-                        <input 
-                            className='font-sm' type='text' id='lastName' name='lastName' pattern='[a-zA-Z]+' placeholder='Last Name' required
-                            value={formData.lastName} onChange={(e) => handleFormUpdate(e)}
-                        />
-                        <label className='font-sm' htmlFor='lastName' >Last Name</label>
-                    </div>   
-                </div>                       
-                <div className='container input-container' data-help='Use 8 to 15 alphabet or number for your username'>
-                    <div className='font-sm'>
-                        <input 
-                            className='font-sm' type='text' id='username' name='username' placeholder='Username' required
-                            pattern='^[a-zA-Z0-9]{8,15}$' minLength={8} maxLength={15} 
-                            value={formData.username} onChange={(e) => handleFormUpdate(e)}
-                        />
-                        <label className='font-sm' htmlFor='username'>Username</label>
-                    </div>
-                </div>
-                <div className='container input-container' data-help='Use 10 to 20 alphabet or number for your password'>
-                    <div className='font-sm'>
-                        <input 
-                            className='font-sm' type='password' id='password' name='password' placeholder='Password'
-                            pattern='(?=.*\d)(?=.*[a-zA-Z])^[a-zA-Z0-9]{10,20}$' minLength={10} maxLength={20} required
-                            value={formData.password} onChange={(e) => handleFormUpdate(e)}
-                        />
-                        <label className='font-sm' htmlFor='password'>Password</label>
-                    </div>
-                </div>
-                <div className='container input-container' data-help='Those passwords didn’t match. Try again.'>
-                    <div className='font-sm'>
-                        <input 
-                            className='font-sm' type='password' id='confirm' name='confirm' placeholder='Confirm' required
-                            value={formData.confirm} onChange={(e) => handleFormUpdate(e)}
-                        />
-                        <label className='font-sm' htmlFor='confirm'>Confirm Password</label>
-                    </div>
-                </div>
-                <button type='submit' onClick={(e) => handleSignUp(e, formData)} ref={submitBtnRef}>Sign Up</button>
+                <Input
+                    label='First Name'
+                    type='text'
+                    id='firstName'
+                    placeholder='First Name'
+                    value={formData.firstName}
+                    required
+                    errorMessage='i.e. Ben'
+                    onChange={(e) => handleFormUpdate(e)}
+                    pattern='[a-zA-Z]+'
+                />
+                <Input
+                    label='Last Name'
+                    type='text'
+                    id='lastName'
+                    placeholder='Last Name'
+                    value={formData.lastName}
+                    required
+                    errorMessage='i.e. Wong'
+                    onChange={(e) => handleFormUpdate(e)}
+                    pattern='[a-zA-Z]+'
+                />            
+                <Input
+                    label='Username'
+                    type='text'
+                    id='username'
+                    placeholder='Username'
+                    value={formData.username}
+                    required
+                    errorMessage='Use 8 to 15 alphabet or number for your username.'
+                    onChange={(e) => handleFormUpdate(e)}
+                    pattern='^[a-zA-Z0-9]{8,15}$' 
+                    minLength={8} 
+                    maxLength={15} 
+                />     
+                <Input
+                    label='Password'
+                    type='password'
+                    id='password'
+                    placeholder='Password'
+                    value={formData.password}
+                    required
+                    errorMessage='Use 10 to 20 alphabet or number for your password.'
+                    onChange={(e) => handleFormUpdate(e)}
+                    pattern='(?=.*\d)(?=.*[a-zA-Z])^[a-zA-Z0-9]{10,20}$'
+                    minLength={10} 
+                    maxLength={20} 
+                />    
+                <Input
+                    label='Confirm Passowrd'
+                    type='password'
+                    id='confirm'
+                    placeholder='Confirm Password'
+                    value={formData.confirm}
+                    required
+                    errorMessage='Those passwords didn’t match. Try again.'
+                    onChange={(e) => handleFormUpdate(e)}
+                    pattern={formData.password}
+                    minLength={10} 
+                    maxLength={20} 
+                />           
+                <button 
+                    type='submit' 
+                    onClick={(e) => handleSignUp(e, formData)}
+                    disabled = {submitBtnDisabled}
+                >
+                    Sign Up
+                </button>
             </form>            
         </>
     );
