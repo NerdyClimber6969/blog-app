@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import styles from './Swiper.module.css';
 
-function Swiper({ fetchData, render, skeletonRender }) {
-    const { data: items, loading } = fetchData();
+function Swiper({ items, buttonDisabled }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [containerWidth, setContainerWidth] = useState();
     const containerRef = useRef();
@@ -42,7 +41,7 @@ function Swiper({ fetchData, render, skeletonRender }) {
             <button 
                 className={styles.btn}
                 onClick={() => goToPrevious()}
-                disabled={loading ? true : false}
+                disabled={buttonDisabled ? true : false}
             >
                 &lt;
             </button>
@@ -50,35 +49,24 @@ function Swiper({ fetchData, render, skeletonRender }) {
                 className={styles.content}
                 style= {{width: `${containerWidth}px`}}
             >
-                {loading ? (
-                    Array(3).fill().map((_, index) => (
-                        <div 
-                            className={styles.item}
-                            key={index}
-                        > 
-                            {skeletonRender()}                                
-                        </div>
-                    ))
-                ) : (
-                    items.map((item, index) => (
-                        <div 
-                            className={styles.item}
-                            key={item.id}
-                            style={{
-                                transform: `translateX(${-100 * currentIndex}%)`,
-                                transition: 'transform 0.3s ease'
-                            }}
-    
-                        >
-                            {render(item)}
-                        </div>
-                    ))
-                )}
+                {items.map((item, index) => (
+                    <div 
+                        className={styles.item}
+                        key={item.id || index}
+                        style={{
+                            transform: `translateX(${-100 * currentIndex}%)`,
+                            transition: 'transform 0.3s ease'
+                        }}
+
+                    >
+                        {item}
+                    </div>
+                ))}
             </div>   
             <button 
                     className={styles.btn}
                     onClick={() => goToNext()}
-                    disabled={loading ? true : false}
+                    disabled={buttonDisabled ? true : false}
                 >
                     &gt;
             </button>

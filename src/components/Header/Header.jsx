@@ -9,15 +9,13 @@ function Header(props) {
     return (
         <header className={styles.header}>
             <div>
-                <h1 className='font-lg'>DevBlog</h1>
+                <h1 className='font-lg'><Link to='/'>DevBlog</Link></h1>
             </div>
             <nav className={styles.navBar}>
                 <ul>
-                    {/* <li className='font-sm'><Link to='/'>Home</Link></li> */}
                     <li className='font-sm'><Link to='/posts'>Posts</Link></li>
                     {user ? (
                         <>
-                            <li className='font-sm'><Link to='/profiles'>Profile</Link></li>
                             <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>
                         </>
                     ) : (    
