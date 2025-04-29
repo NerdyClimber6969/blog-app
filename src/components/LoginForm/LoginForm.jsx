@@ -8,25 +8,21 @@ import API from '../../services/apiService.js';
 function LoginForm(props) {
     const navigate = useNavigate()
     const { setUser } =  useAuthen();
-    const { handleSetNotifications, createNotification } = useNotifications();
+    const { handleApiCall } = useNotifications();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     async function handleLogin(e, username, password) {
         e.preventDefault();
         
-        const response = await API.login({ username, password });
-
-        if (!response.success) {
-            return handleSetNotifications(response.errors.map((error, index) => 
-                createNotification(error.msg || error.message, 'error')
-            ));
-        };
-
-        localStorage.setItem('accessToken', response.token);
-        setUser(username);
-        handleSetNotifications(createNotification('Login successfully', 'success'));
-        return navigate('/');
+        await handleApiCall(() => API.login({ username, password }), {
+            successMessage: 'Login successfully',
+            onSuccess: () => {
+                setUser(username);
+                navigate('/');
+                return;
+            }
+        });
     };
 
     return (

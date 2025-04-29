@@ -1,49 +1,75 @@
 import { useState, useEffect, createContext, useContext } from 'react';
-import { isExpired, decodeToken } from '../utils.jsx';
 import { useNavigate } from 'react-router-dom';
-import { useNotifications} from './NotificationProvider.jsx';
+import { useNotifications } from './NotificationProvider.jsx';
+import API from '../services/apiService.js';
 
 const AuthenContext = createContext();
 
 function AuthenProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [initialized, setInitialized] = useState(false);
-    const { createNotification, handleSetNotifications } = useNotifications();
+    const { handleApiCall, setNotifications } = useNotifications();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const validateToken = () => {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                if (user !== null) {
-                    setUser(null);  
+    const verifyToken = async () => {
+        console.log('verifying')
+        await handleApiCall(() => API.verify(), {
+            notifySuccess: false,
+            notifyError: false,
+            onSuccess: (response) => {
+                setUser(response.username);
+                setIsAuthenticated(true);
+                setInitialized(true);
+            },
+            onError: (error, infos) => {
+                setUser(null);
+                setIsAuthenticated(false);
+
+                const [ { message } ] = infos; 
+                if (message === 'Expired token') {
+                    return handleLogout();
+                } else if (message === 'Invalid expired') {
+                    return setNotifications({
+                        message: message,
+                        id: Date.now(),
+                        isClosing: false,
+                        type: 'error'
+                    })
                 };
 
-                return ;
-            };
-    
-            const decodedToken = decodeToken(token);
-            if (isExpired(decodedToken.payload.exp)) {
-                handleLogout('/', 'Your session has expired. Please log in again.');
-            } else if (!user) {
-                setUser(decodedToken.payload.username);
-            };
+                return;
+            }
+        });
 
-            return;
-        };
-
-        validateToken();
-        setInitialized(true);
-        const intervalTimerId = setInterval(validateToken, 1000 * 60);
-        return () => clearInterval(intervalTimerId);
-    }, []);
-
-    function handleLogout(path='/', message='You have been safely logged out.') {
-        localStorage.removeItem('accessToken');
-        setUser(null);
-        handleSetNotifications(createNotification(message, 'success'));   
-        return navigate(path);
+        return;
     };
+
+    async function handleLogout(path='/', message='You have been safely logged out.') {
+        await handleApiCall(async () => await API.logout(), {
+            successMessage: message,
+            onSuccess: () => {
+                setUser(null);
+                setIsAuthenticated(false);
+                return navigate(path)
+            }
+        });
+    };
+
+    useEffect(() => {
+        if (isAuthenticated || !initialized) {
+            verifyToken();
+        };
+        
+        const intervalTimerId = setInterval(() => {
+            if (isAuthenticated) {
+                verifyToken();
+            };
+
+        }, 1000 * 60 * 5);
+
+        return () => clearInterval(intervalTimerId);
+    }, [isAuthenticated]);
 
     return (
         <AuthenContext.Provider value={{

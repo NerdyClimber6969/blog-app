@@ -7,6 +7,8 @@ import Swiper from '../../components/Swiper/Swiper.jsx';
 import styles from './HomePage.module.css';
 
 function HomePage(props) {
+    const { data: posts, loading } = usePosts();
+
     return (
         <main> 
             <section className='mb8'>
@@ -29,20 +31,26 @@ function HomePage(props) {
 
             <section>
                 <h2 className={`${styles.title} font-lg mb3`}>Recent Post</h2>
-                <Swiper
-                    fetchData={usePosts}
-                    render={(post) => (
-                        <PostCard
-                            id={post.id}
-                            title={post.title}
-                            summary={post.summary}
-                            author={post.author.username}
-                            data={post.createdAt}
-                            imgSrc='/fff.jpg'
-                        />
-                    )}
-                    skeletonRender={() => <SkeletonCard />}
-                />
+                {loading ? (
+                    <Swiper 
+                        items={Array(3).fill().map((_, index) => (<SkeletonCard />))}
+                        buttonDisabled={true}
+                    />
+                ) : (
+                    <Swiper
+                        items={posts.map((post) => (
+                            <PostCard
+                                id={post.id}
+                                title={post.title}
+                                summary={post.summary}
+                                author={post.author.username}
+                                data={post.createdAt}
+                                imgSrc='/fff.jpg'
+                            />
+                        ))}
+                        buttonDisabled={false}
+                    />
+                )}
             </section>
         </main>
     );

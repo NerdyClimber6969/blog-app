@@ -14,7 +14,7 @@ function SignUpForm(props) {
     };
 
     const navigate = useNavigate()
-    const { handleSetNotifications, createNotification } = useNotifications();
+    const { handleApiCall } = useNotifications();
     const [formData, setFormData] = useState(defaultFormData);
     const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
     const formRef = useRef(null);
@@ -47,15 +47,10 @@ function SignUpForm(props) {
     async function handleSignUp(e, formData) {
         e.preventDefault();
 
-        const response = await API.signUp(formData);
-        if (response.success) {
-            handleSetNotifications(createNotification('Register successfully, you can now login.', 'success'));
-            return navigate('/login');
-        };
-
-        return handleSetNotifications(response.errors.map((error) => 
-            createNotification(error.msg || error.message, 'error')
-        ));
+        await handleApiCall(()=> API.signUp(formData), {
+            successMessage: 'Register successfully, you can now login.',
+            onSuccess: () => navigate('/login'),
+        });
     };
 
     return (

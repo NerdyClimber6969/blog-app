@@ -5,7 +5,7 @@ import API from '../services/apiService.js';
 function usePosts(queryConfig=null) {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { handleSetNotifications, createNotification } = useNotifications();
+    const { handleApiCall } = useNotifications();
 
     let url;
     if (!queryConfig) {
@@ -21,16 +21,15 @@ function usePosts(queryConfig=null) {
 
     useEffect(() => {
         const handleFetchPosts = async() => {
-            const json = await API.getPosts(url);
-            
-            if (!json.success) {
-                return handleSetNotifications(json.errors.map((error) => 
-                    createNotification(error.msg || error.message, 'error')
-                ));
-            };
-
-            setLoading(false);
-            setPosts(json.posts);
+            await handleApiCall(() => API.getPosts(url), {
+                notifySuccess: false,
+                notifyError: false,
+                onSuccess: (response) => {
+                    setLoading(false);
+                    setPosts(response.posts);
+                    return;
+                }
+            });
         };
 
         const timer = setTimeout(() => handleFetchPosts(), 2 * 1000);
