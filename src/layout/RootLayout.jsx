@@ -13,9 +13,7 @@ const RootLayout = () => {
             <NotificationDisplayer/>
             <div className={styles.pageLayout}>
               <Header />
-              <div className={styles.mainLayout}>
-                <Outlet />           
-              </div>
+                <Outlet />
               <Footer />
             </div>
         </AuthenProvider>  

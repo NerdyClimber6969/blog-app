@@ -3,10 +3,3 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
-
-.mainLayout {
-    height: 100%;
-    margin: 0 auto;
-    max-width: 1280px;
-    padding: 0 var(--spacing5);
-}
