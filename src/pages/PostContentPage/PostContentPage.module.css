@@ -1,0 +1,21 @@
+.postContentPage {
+    .maxWidth {
+        max-width: 680px;
+        width: 100%;
+    }
+
+    ol {
+        list-style: none;
+
+        li {
+            border-bottom: 1px solid var(--light-dark);
+        }
+    }
+
+}
+
+.contentContainer {
+    padding: var(--spacing4);
+    border-radius: var(--radius-box);
+    background-color: var(--color-base-100);
+}

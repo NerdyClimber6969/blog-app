@@ -17,3 +17,8 @@ export function decodeToken(token) {
     const payload = JSON.parse(atob(splited[1]));
     return { header, payload };
 };
+
+export function calculateNumberOfDay(date1, date2) {
+    const numberOfDay = Math.floor((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
+    return Math.abs(numberOfDay); 
+};

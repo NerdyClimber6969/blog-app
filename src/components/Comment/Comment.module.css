@@ -1,0 +1,26 @@
+.comment {
+    padding-top: var(--spacing4);
+    padding-bottom: var(--spacing3);
+    font: var(--font4);
+    font-size: 14px;
+
+    header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        img {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    }
+
+    footer {
+        div {
+            display: flex;
+            gap: var(--spacing3)
+        }
+    }
+}
