@@ -1,61 +1,61 @@
 .formInput {
     margin-bottom: var(--spacing4);
     
-    >div {
+    > div {
         position: relative;
     }
 
-    input::placeholder {
-        color: transparent;
-    }
+    input {
+        &::placeholder {
+            color: transparent;
+        }
 
-    label {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: var(--spacing2);
-        background-color: var(--color-base-100);
-        padding: 0 var(--spacing2);
-        transition: transform 130ms linear;
-        border: none;
-        user-select: none;
-    }
+        + label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: var(--spacing2);
+            background-color: var(--color-base-100);
+            padding: 0 var(--spacing2);
+            transition: transform 130ms linear;
+            border: none;
+            user-select: none;
+        }
 
-    input:invalid:placeholder-shown {
-        background-color: var(--color-base-100);
-        border: solid  var(--color-base-content) var(--border);
-        color: var(--color-base-content)
-    }
+        &:focus {
+            border: solid var(--color-info) var(--border);
 
-    input:focus,
-    input:focus:placeholder-shown {
-        border: solid var(--color-info) var(--border);
-    }
+            &:user-invalid {
+                color: var(--color-error);
+                border: solid var(--color-error) var(--border);
 
-    input:invalid,
-    input:invalid:not(:placeholder-shown) {
-        color: var(--color-error);
-        border: solid var(--color-error) var(--border);
-    }
+                + label {
+                    color: var(--color-error);
+                }
+            }
 
-    input:focus + label,
-    input:focus:not(:placeholder-shown) + label,
-    input:not(:placeholder-shown) + label {
-        font: var(--font6);
-        transform: translate(2rem, -2.6rem);
-    }
+            + label { 
+                font: var(--font6);
+                transform: translate(2rem, -2.6rem);
+                color: var(--color-info);
+            }
+        }
 
-    input:not(:placeholder-shown) + label {
-        color: var(--color-base-content);
-    }
-
-    input:focus + label,
-    input:focus:not(:placeholder-shown) + label {
-        color: var(--color-info);
-    }
-
-    input:invalid:not(:placeholder-shown) + label {
-        color: var(--color-error);
+        &:not(:focus) {
+            &:user-invalid {
+                color: var(--color-error);
+                border: solid var(--color-error) var(--border);
+    
+                + label {
+                    color: var(--color-error);
+                }
+            }
+    
+            &:not(:placeholder-shown) + label {
+                font: var(--font6);
+                transform: translate(2rem, -2.6rem);
+            }
+        }
     }
 
     span {
@@ -63,7 +63,7 @@
         display: none;
     }
     
-    &:has(input:invalid:not(:placeholder-shown)) span {
+    &:has(input:user-invalid) span {
         display: block;
     }
 }
