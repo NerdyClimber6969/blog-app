@@ -9,7 +9,7 @@ function Header(props) {
     return (
         <header className={styles.header}>
             <div>
-                <h1 className='font-lg'><Link to='/'>DevBlog</Link></h1>
+                <span className='font-md bold'><Link to='/'>DevBlog</Link></span>
             </div>
             <nav className={styles.navBar}>
                 <ul>

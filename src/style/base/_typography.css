@@ -25,3 +25,7 @@
 .font-xxs {
     font: var(--font6)
 }
+
+.bold {
+    font-weight: 600;
+}
