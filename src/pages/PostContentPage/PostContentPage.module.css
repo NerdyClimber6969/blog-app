@@ -1,7 +1,32 @@
-.postContentPage {
-    .maxWidth {
+.post {
+    display: flex;
+    justify-content: center;
+
+    > div {
         max-width: 680px;
         width: 100%;
+    }
+}
+
+.comments {
+    display: flex;
+    justify-content: center;
+
+    > section {
+        max-width: 680px;
+        width: 100%;
+
+        > div {
+            padding: var(--spacing4);
+            border-radius: var(--radius-box);
+            background-color: var(--color-base-100);
+        }
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     ol {
@@ -11,11 +36,4 @@
             border-bottom: 1px solid var(--light-dark);
         }
     }
-
-}
-
-.contentContainer {
-    padding: var(--spacing4);
-    border-radius: var(--radius-box);
-    background-color: var(--color-base-100);
 }

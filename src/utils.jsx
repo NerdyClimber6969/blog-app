@@ -20,5 +20,5 @@ export function decodeToken(token) {
 
 export function calculateNumberOfDay(date1, date2) {
     const numberOfDay = Math.floor((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
-    return Math.abs(numberOfDay); 
+    return numberOfDay < 0 ? 0 : numberOfDay; 
 };
