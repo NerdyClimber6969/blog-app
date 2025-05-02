@@ -7,7 +7,7 @@ import API from '../../services/apiService.js';
 
 function LoginForm(props) {
     const navigate = useNavigate()
-    const { setUser } =  useAuthen();
+    const { setUser, setIsAuthenticated } =  useAuthen();
     const { handleApiCall } = useNotifications();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +19,7 @@ function LoginForm(props) {
             successMessage: 'Login successfully',
             onSuccess: () => {
                 setUser(username);
+                setIsAuthenticated(true);
                 navigate('/');
                 return;
             }

@@ -78,7 +78,8 @@ function AuthenProvider({ children }) {
             setUser, 
             handleLogout,
             initialized,
-            isAuthenticated
+            isAuthenticated,
+            setIsAuthenticated
         }}>
             { children }
         </AuthenContext.Provider>
