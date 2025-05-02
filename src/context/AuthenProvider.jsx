@@ -25,6 +25,7 @@ function AuthenProvider({ children }) {
             onError: (error, infos) => {
                 setUser(null);
                 setIsAuthenticated(false);
+                setInitialized(true);
 
                 const [ { message } ] = infos; 
                 if (message === 'Expired token') {
@@ -76,7 +77,8 @@ function AuthenProvider({ children }) {
             user, 
             setUser, 
             handleLogout,
-            initialized
+            initialized,
+            isAuthenticated
         }}>
             { children }
         </AuthenContext.Provider>

@@ -3,6 +3,7 @@
     flex-direction: row;
     margin-top: var(--spacing7);
     gap: var(--spacing7);
+    justify-content: center;
 
     @media (max-width: 900px) {
         display: block;
@@ -15,9 +16,7 @@
     }
 }
 
-.formSection {
-    flex: 1;
-    
+.formSection { 
     @media (max-width: 900px) {
         width: 100%;
     }
