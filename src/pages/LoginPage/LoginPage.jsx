@@ -8,25 +8,21 @@ function LoginPage(props) {
     const location = useLocation();
 
     return (
-        isAuthenticated ? (
-            <Navigate to='/' state={{ from: location }} replace />
-        ) : (
-            <main>
-                <div className='mainLayout'>
-                    <div className={styles.layout}>
-                        <section className={styles.heroSection}>
-                            <h1 className='font-hero mb5'>Login</h1>
-                            <div>
-                                <span className='font-md'>to continue to DevBlog</span>
-                            </div>
-                        </section>
-                        <section className={styles.formSection}>
-                            <LoginForm/>
-                        </section>                       
-                    </div>
-                </div>            
-            </main>
-        )
+        <main>
+            <div className='mainLayout'>
+                <div className={styles.layout}>
+                    <section className={styles.heroSection}>
+                        <h1 className='font-hero mb5'>Login</h1>
+                        <div>
+                            <span className='font-md'>to continue to DevBlog</span>
+                        </div>
+                    </section>
+                    <section className={styles.formSection}>
+                        <LoginForm/>
+                    </section>                       
+                </div>
+            </div>            
+        </main>
     );
 };
 

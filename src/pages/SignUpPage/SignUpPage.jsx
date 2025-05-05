@@ -8,25 +8,21 @@ function SignUpPage(props) {
     const location = useLocation();
 
     return (
-        isAuthenticated ? (
-            <Navigate to='/' state={{ from: location }} replace />
-        ) : (
-            <main>
-                <div className='mainLayout'>
-                    <div className={styles.layout}>
-                        <section className={styles.heroSection}>
-                            <h1 className='font-hero mb5'>Sign Up</h1>
-                            <div>
-                                <span className='font-md'>to start using DevBlog</span>
-                            </div>
-                        </section>
-                        <section className={styles.formSection}>
-                            <SignUpForm/> 
-                        </section>  
-                    </div>
+        <main>
+            <div className='mainLayout'>
+                <div className={styles.layout}>
+                    <section className={styles.heroSection}>
+                        <h1 className='font-hero mb5'>Sign Up</h1>
+                        <div>
+                            <span className='font-md'>to start using DevBlog</span>
+                        </div>
+                    </section>
+                    <section className={styles.formSection}>
+                        <SignUpForm/> 
+                    </section>  
                 </div>
-            </main>
-        )
+            </div>
+        </main>
     );
 };
 
