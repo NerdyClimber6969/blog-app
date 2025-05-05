@@ -57,19 +57,25 @@ function AuthenProvider({ children }) {
         });
     };
 
+    // Initial check on page load
     useEffect(() => {
-        if (isAuthenticated || !initialized) {
-            verifyToken();
+        verifyToken();
+    }, []);
+
+
+    useEffect(() => {
+        let timerId;
+
+        if (isAuthenticated) {
+            //Run every 5 minutes
+            timerId = setInterval(() => verifyToken, 1000 * 60 * 5); 
         };
         
-        const intervalTimerId = setInterval(() => {
-            if (isAuthenticated) {
-                verifyToken();
+        return () => {
+            if (timerId) {
+                clearInterval(timerId);
             };
-
-        }, 1000 * 60 * 5);
-
-        return () => clearInterval(intervalTimerId);
+        };
     }, [isAuthenticated]);
 
     return (
