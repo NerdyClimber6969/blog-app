@@ -1,12 +1,7 @@
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuthen } from '../../context/AuthenProvider.jsx';
 import LoginForm from '../../components/LoginForm/LoginForm.jsx';
 import styles from './LoginPage.module.css';
 
 function LoginPage(props) {
-    const { isAuthenticated } = useAuthen();
-    const location = useLocation();
-
     return (
         <main>
             <div className='mainLayout'>

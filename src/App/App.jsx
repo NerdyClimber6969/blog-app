@@ -1,6 +1,4 @@
 import '../context/AppProvider.jsx';
-
-import { useAuthen } from '../context/AuthenProvider.jsx';
 import NotificationDisplayer from '../NotificationDisplayer.jsx';
 import Header from '../components/Header/Header.jsx';
 import Footer from '../components/Footer/Footer.jsx';
@@ -9,20 +7,14 @@ import styles from './App.module.css';
 import AppProvider from '../context/AppProvider.jsx';
 
 function AppContent(props) {
-    const { initialized } = useAuthen();
-
     return (
         <>  
             <NotificationDisplayer/>
-            {initialized ? (
-                <div className={styles.appLayout}>
-                    <Header />
-                    <GuardedOutlet/>
-                    <Footer />
-                </div>
-            ) : (
-                <div>Loading</div>
-            )}
+            <div className={styles.appLayout}>
+                <Header />
+                <GuardedOutlet/>
+                <Footer />
+            </div>
         </>
     );
 };

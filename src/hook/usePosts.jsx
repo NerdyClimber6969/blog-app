@@ -23,7 +23,7 @@ function usePosts(queryConfig=null) {
         const handleFetchPosts = async() => {
             await handleApiCall(() => API.getPosts(url), {
                 notifySuccess: false,
-                notifyError: false,
+                notifyError: true,
                 onSuccess: (response) => {
                     setLoading(false);
                     setPosts(response.posts);

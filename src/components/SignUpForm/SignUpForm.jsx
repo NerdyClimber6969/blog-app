@@ -13,9 +13,18 @@ function SignUpForm(props) {
         confirm: ''
     };
 
+    const defaultValidationMessage = {
+        firstName:'i.e. Ben', 
+        lastName:'i.e. Wong', 
+        username: 'Use 8 to 15 alphabet or number for your username.',
+        password: 'Use 10 to 20 alphabet or number for your password.',
+        confirm: 'Those passwords didn’t match. Try again.'
+    };
+
     const navigate = useNavigate()
     const { handleApiCall } = useNotifications();
     const [formData, setFormData] = useState(defaultFormData);
+    const [validationMessage, setValidationMessage] = useState(defaultValidationMessage);
     const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
     const formRef = useRef(null);
 
@@ -50,12 +59,22 @@ function SignUpForm(props) {
         await handleApiCall(()=> API.signUp(formData), {
             successMessage: 'Register successfully, you can now login.',
             onSuccess: () => navigate('/login'),
+            onError: (error) => {
+                if (error.name === 'ValidationError' && Array.isArray(error.details?.invalidFields)) {
+                    const newValidationMessage = { ...defaultValidationMessage };
+
+                    for (const field of error.details.invalidFields) {
+                        newValidationMessage[field.path] = field.msg
+                    };
+                    setValidationMessage(newValidationMessage);
+                };
+            }
         });
     };
 
     return (
         <>
-            <form className='sign-up-form' ref={formRef}>
+            <form className='sign-up-form' ref={formRef} novalidate>
                 <Input
                     label='First Name'
                     type='text'
@@ -63,7 +82,7 @@ function SignUpForm(props) {
                     placeholder='First Name'
                     value={formData.firstName}
                     required
-                    errorMessage='i.e. Ben'
+                    errorMessage={validationMessage.firstName}
                     onChange={(e) => handleFormUpdate(e)}
                     pattern='[a-zA-Z]+'
                 />
@@ -74,7 +93,7 @@ function SignUpForm(props) {
                     placeholder='Last Name'
                     value={formData.lastName}
                     required
-                    errorMessage='i.e. Wong'
+                    errorMessage={validationMessage.lastName}
                     onChange={(e) => handleFormUpdate(e)}
                     pattern='[a-zA-Z]+'
                 />            
@@ -85,7 +104,7 @@ function SignUpForm(props) {
                     placeholder='Username'
                     value={formData.username}
                     required
-                    errorMessage='Use 8 to 15 alphabet or number for your username.'
+                    errorMessage={validationMessage.username}
                     onChange={(e) => handleFormUpdate(e)}
                     pattern='^[a-zA-Z0-9]{8,15}$' 
                     minLength={8} 
@@ -98,7 +117,7 @@ function SignUpForm(props) {
                     placeholder='Password'
                     value={formData.password}
                     required
-                    errorMessage='Use 10 to 20 alphabet or number for your password.'
+                    errorMessage={validationMessage.password}
                     onChange={(e) => handleFormUpdate(e)}
                     pattern='(?=.*\d)(?=.*[a-zA-Z])^[a-zA-Z0-9]{10,20}$'
                     minLength={10} 
@@ -111,16 +130,14 @@ function SignUpForm(props) {
                     placeholder='Confirm Password'
                     value={formData.confirm}
                     required
-                    errorMessage='Those passwords didn’t match. Try again.'
+                    errorMessage={validationMessage.confirm}
                     onChange={(e) => handleFormUpdate(e)}
                     pattern={formData.password}
-                    minLength={10} 
-                    maxLength={20} 
                 />           
                 <button 
                     type='submit' 
                     onClick={(e) => handleSignUp(e, formData)}
-                    disabled = {submitBtnDisabled}
+                    disabled={submitBtnDisabled}
                 >
                     Sign Up
                 </button>

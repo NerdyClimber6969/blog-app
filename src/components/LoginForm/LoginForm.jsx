@@ -15,7 +15,7 @@ function LoginForm(props) {
     async function handleLogin(e, username, password) {
         e.preventDefault();
         
-        await handleApiCall(() => API.login({ username, password }), {
+        await handleApiCall(() => API.login(username, password), {
             successMessage: 'Login successfully',
             onSuccess: () => {
                 setUser(username);

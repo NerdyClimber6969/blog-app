@@ -8,37 +8,29 @@ const AuthenContext = createContext();
 function AuthenProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [initialized, setInitialized] = useState(false);
-    const { handleApiCall, setNotifications } = useNotifications();
+    const [loading, setLoading] = useState(true);
+    const { handleApiCall } = useNotifications();
     const navigate = useNavigate();
 
     const verifyToken = async () => {
-        console.log('verifying')
         await handleApiCall(() => API.verify(), {
             notifySuccess: false,
             notifyError: false,
             onSuccess: (response) => {
+                console.log(response)
                 setUser(response.username);
                 setIsAuthenticated(true);
-                setInitialized(true);
+                setLoading(false);
             },
-            onError: (error, infos) => {
-                setUser(null);
-                setIsAuthenticated(false);
-                setInitialized(true);
-
-                const [ { message } ] = infos; 
-                if (message === 'Expired token') {
-                    return handleLogout();
-                } else if (message === 'Invalid expired') {
-                    return setNotifications({
-                        message: message,
-                        id: Date.now(),
-                        isClosing: false,
-                        type: 'error'
-                    })
+            onError: (error) => {
+                if (error.details.failureReason === 'token expired' || error.details.failureReason === 'invalid token') {
+                    handleLogout();
+                } else if (error.details.failureReason === 'token missing') {
+                    setUser(null);
+                    setIsAuthenticated(false);
                 };
 
+                setLoading(false);
                 return;
             }
         });
@@ -47,12 +39,13 @@ function AuthenProvider({ children }) {
     };
 
     async function handleLogout(path='/', message='You have been safely logged out.') {
-        await handleApiCall(async () => await API.logout(), {
+        await handleApiCall(async () => API.logout(), {
             successMessage: message,
             onSuccess: () => {
                 setUser(null);
                 setIsAuthenticated(false);
-                return navigate(path)
+                navigate(path);
+                return;
             }
         });
     };
@@ -83,11 +76,15 @@ function AuthenProvider({ children }) {
             user, 
             setUser, 
             handleLogout,
-            initialized,
+            loading,
             isAuthenticated,
             setIsAuthenticated
-        }}>
-            { children }
+        }}> 
+            {loading ? (
+                <div>Loading</div>
+            ): (
+                children
+            )}
         </AuthenContext.Provider>
     );  
 };
