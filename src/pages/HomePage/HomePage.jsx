@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import usePosts from '../../hook/usePosts.jsx';
+import { useSearchParams } from 'react-router-dom';
+import usePostsMeta from '../../hook/usePostsMeta.jsx';
 import PostCard from '../../components/PostCard/PostCard.jsx';
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
 import Hero from '../../components/Hero/Hero.jsx';
@@ -7,7 +8,8 @@ import Swiper from '../../components/Swiper/Swiper.jsx';
 import styles from './HomePage.module.css';
 
 function HomePage(props) {
-    const { data: posts, loading } = usePosts();
+    const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
+    const { posts, totalPages, loading } = usePostsMeta(searchParams);
 
     return (
         <main>

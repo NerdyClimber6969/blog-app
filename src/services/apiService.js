@@ -49,7 +49,7 @@ function createAPIService() {
         login: (username, password) => request('/authen/login', 'POST', { username, password }, true),
         logout: () => request('/authen/logout', 'POST', null, true),
         verify: () =>request('/authen/verify', 'GET', null, true),
-        getPosts: (url) => request(url, 'GET', null, true),
+        getPosts: (searchParams) => request(`/posts${searchParams ? `?${searchParams.toString()}` : ''}`, 'GET', null, true),
         getPost: (postId) => request(`/posts/${postId}`, 'GET', null, true),
         addComment: (postId, content) => request(`/posts/${postId}/comments`, 'POST', { content }, true)
     };

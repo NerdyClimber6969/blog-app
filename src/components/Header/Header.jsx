@@ -13,7 +13,7 @@ function Header(props) {
             </div>
             <nav className={styles.navBar}>
                 <ul>
-                    <li className='font-sm'><Link to='/posts'>Posts</Link></li>
+                    <li className='font-sm'><Link to='/posts' state={{ reset: true }}>Posts</Link></li>
                     {user ? (
                         <>
                             <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>

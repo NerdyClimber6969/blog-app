@@ -1,0 +1,28 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing3);
+    user-select: none;
+
+    > div {
+        display: flex;
+        gap: var(--spacing2);
+        justify-content: center;
+        align-items: center;
+
+        span {
+            padding: 0 var(--spacing2);
+            font-weight: bold;
+        }
+    }
+
+    button {
+        padding: var(--spacing2) var(--spacing3);
+
+        &:disabled {
+            background-color: var(--color-info);
+            filter: brightness(100%);
+        }
+    }
+}

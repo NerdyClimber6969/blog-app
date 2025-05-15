@@ -24,14 +24,15 @@ a:visited {
 input {
     background-color: var(--color-base-100);
     color: var(--color-base-content);
-    border: solid var(--border) var(--color-base-content) ;
+    border: solid 2px var(--color-base-content) ;
     border-radius: var(--radius-field);
     width: 100%;
     height: var(--size-field);
     padding: var(--spacing2);
-    margin-bottom: var(--spacing1);
     font: var(--font3);
-    outline: none
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 input::placeholder {

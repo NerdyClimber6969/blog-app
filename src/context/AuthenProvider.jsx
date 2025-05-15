@@ -17,7 +17,6 @@ function AuthenProvider({ children }) {
             notifySuccess: false,
             notifyError: false,
             onSuccess: (response) => {
-                console.log(response)
                 setUser(response.username);
                 setIsAuthenticated(true);
                 setLoading(false);
