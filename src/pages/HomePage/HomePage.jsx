@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
-import usePostsMeta from '../../hook/usePostsMeta.jsx';
+import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
 import PostCard from '../../components/PostCard/PostCard.jsx';
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
 import Hero from '../../components/Hero/Hero.jsx';
 import Swiper from '../../components/Swiper/Swiper.jsx';
 import styles from './HomePage.module.css';
 
+const SEARCH_PARAMS = new URLSearchParams({ page: 1, pageSize: 7, orderBy: 'createdAt', orderDir: 'desc' })
+
 function HomePage(props) {
-    const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
-    const { posts, totalPages, loading } = usePostsMeta(searchParams);
+    const { posts, loading } = usePostsMetaData(SEARCH_PARAMS);
 
     return (
         <main>
