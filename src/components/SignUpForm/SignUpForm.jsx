@@ -60,12 +60,12 @@ function SignUpForm(props) {
             successMessage: 'Register successfully, you can now login.',
             onSuccess: () => navigate('/login'),
             onError: (error) => {
-                if (error.name === 'ValidationError' && Array.isArray(error.details?.invalidFields)) {
+                if (error.name === 'ValidationError' && error.details?.invalidFieldError) {
                     const newValidationMessage = { ...defaultValidationMessage };
-
-                    for (const field of error.details.invalidFields) {
-                        newValidationMessage[field.path] = field.msg
+                    for (const field of error.details?.invalidFieldError.fields) {
+                        newValidationMessage[field.path] = field.message
                     };
+                    
                     setValidationMessage(newValidationMessage);
                 };
             }
