@@ -21,8 +21,7 @@
         padding: var(--spacing2) var(--spacing3);
 
         &:disabled {
-            background-color: var(--color-info);
-            filter: brightness(100%);
+            filter: brightness(50%);
         }
     }
 }

@@ -111,6 +111,7 @@ function Pagination({ currentPage, totalPages, maxVisiblePageBtn, onPageChange }
             <button 
                 type='button' 
                 onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
             >
                 <span>{'<'}</span> Previous
             </button>
@@ -120,6 +121,7 @@ function Pagination({ currentPage, totalPages, maxVisiblePageBtn, onPageChange }
             <button 
                 type='button' 
                 onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
             >
                 Next <span>{'>'}</span>
             </button>
