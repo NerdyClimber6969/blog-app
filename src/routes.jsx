@@ -2,7 +2,7 @@ import App from './App/App.jsx';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage/SignUpPage.jsx';
-import PostPage from './pages/PostPage/PostPage.jsx';
+import PostListPage from './pages/PostListPage/PostListPage.jsx';
 import PostContentPage from './pages/PostContentPage/PostContentPage.jsx';
 
 const routes = [
@@ -16,7 +16,7 @@ const routes = [
         { 
           path: 'posts', 
           children: [
-            { index: true, element: <PostPage /> },
+            { index: true, element: <PostListPage /> },
             { path: ':postId', element: <PostContentPage /> }
           ]
         },

@@ -2,24 +2,25 @@ import { useEffect, useState, useCallback } from 'react';
 import { useNotifications } from '../context/NotificationProvider.jsx';
 import API from '../services/apiService.js';
 
-function usePostsMeta(searchParams) {
-    const [postsMeta, setPostsMeta] = useState([]);
+function usePostsMetaData(searchParams) {
+    const [data, setData] = useState();
+    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const { handleApiCall } = useNotifications();
 
     const handleFetchPosts = useCallback(async (params=null) => {
-        try {
-            await handleApiCall(() => API.getPosts(params), {
+            setData(null);
+            setError(null);
+
+            await handleApiCall(() => API.getPostsMetaData(params), {
                 notifySuccess: false,
                 notifyError: true,
                 onSuccess: (response) => {  
-                    setPostsMeta(response);
-                    return;
-                }
+                    setData({ posts: response.posts, total: response.total });
+                    setLoading(false)
+                },
+                onError: (error) => setError(error),
             });
-        } finally {
-            setLoading(false);
-        };
     }, []);
 
     useEffect(() => { 
@@ -29,12 +30,11 @@ function usePostsMeta(searchParams) {
     }, [searchParams]);
 
     return { 
-        totalPages: postsMeta.totalPages,
-        posts: postsMeta.posts, 
+        total: data?.total,
+        posts: data?.posts, 
         loading, 
-        setLoading, 
-        handleFetchPosts 
+        error,
     }
 };
 
-export default usePostsMeta;
+export default usePostsMetaData;

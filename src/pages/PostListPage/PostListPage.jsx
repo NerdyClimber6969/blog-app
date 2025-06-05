@@ -1,16 +1,16 @@
-import usePostsMeta from '../../hook/usePostsMeta.jsx';
+import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
 import PostCard from '../../components/PostCard/PostCard.jsx';
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
 import Hero from '../../components/Hero/Hero.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
-import styles from './PostPage.module.css';
+import styles from './PostListPage.module.css';
 import { useSearchParams } from 'react-router-dom';
 import { useRef } from 'react';
 
-function PostPage(props) {
+function PostListPage(props) {
     const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
     const searchRef = useRef();
-    const { posts, totalPages, loading } = usePostsMeta(searchParams);
+    const { posts, total, loading } = usePostsMetaData(searchParams);
 
     function handleSearch(e) {
         e.preventDefault();
@@ -110,7 +110,7 @@ function PostPage(props) {
                     {!loading && (
                         <Pagination
                             currentPage={Number(searchParams.get('page')) || 1}
-                            totalPages={totalPages}
+                            totalPages={Math.ceil(total / 9)}
                             maxVisiblePageBtn={5}
                             onPageChange={onPageChange}
                         />
@@ -121,4 +121,4 @@ function PostPage(props) {
     );
 };
 
-export default PostPage;
+export default PostListPage;
