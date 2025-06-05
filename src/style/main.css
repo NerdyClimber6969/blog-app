@@ -5,6 +5,3 @@
 
 /* Layout - structural components used across the site */
 @import "layout/_layout.css";
-
-/* Utilities - helper classes */
-@import "utils/_animations.css";
