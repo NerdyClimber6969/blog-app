@@ -16,10 +16,11 @@
         max-width: 680px;
         width: 100%;
 
-        > div {
+        > div:first-child {
             padding: var(--spacing4);
             border-radius: var(--radius-box);
             background-color: var(--color-base-100);
+            margin-bottom: var(--spacing4);
         }
     }
 

@@ -66,6 +66,7 @@ function createAPIService() {
         verify: () =>request('/authen/verify', 'GET', null, true),
         getPostsMetaData: (searchParams) => request(`/posts${searchParams ? `?${searchParams.toString()}` : ''}`, 'GET', null, true),
         getPost: (postId) => request(`/posts/${postId}`, 'GET', null, true),
+        getComments: (searchParams) => request(`/comments${searchParams ? `?${searchParams.toString()}` : ''}`, 'GET', null, false),
         addComment: (postId, content) => request(`/posts/${postId}/comments`, 'POST', { content }, true)
     };
 };
