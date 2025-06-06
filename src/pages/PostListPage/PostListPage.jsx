@@ -5,40 +5,30 @@ import Hero from '../../components/Hero/Hero.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import styles from './PostListPage.module.css';
 import { useSearchParams } from 'react-router-dom';
-import { useRef } from 'react';
+import { useMemo, useCallback } from 'react';
+import SearchToolbar from '../../components/SearchToolBar/SearchToolBar.jsx';
+import { updateSearchParams } from '../../utils.jsx';
 
 function PostListPage(props) {
     const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
-    const searchRef = useRef();
     const { posts, total, loading } = usePostsMetaData(searchParams);
 
-    function handleSearch(e) {
-        e.preventDefault();
-        const searchValue = searchRef.current.value;
+    const sortingOptions = useMemo(() => ([
+        { value: 'createdAt:desc', label: 'Date of Creation (Desc)' },
+        { value: 'createdAt:asc', label: 'Date of Creation (Asc)' },
+        { value: 'title:desc', label: 'Title (Desc)' },
+        { value: 'title:asc', label: 'Title (Asc)' }
+    ]));
 
-        setSearchParams((searchParams) => {
-            searchParams.set('title', searchValue);
-            return searchParams;
-        });
-    };
+    const handleSearchParamsChange = useCallback((updates) => {
+        setSearchParams((prev) => {
+            const newSearchParams = updateSearchParams(prev, { ...updates });
+            return newSearchParams;
+        })
+    }, []);
 
-    function handleSort(e) {
-        e.preventDefault();
-        const [orderBy, orderDir] = e.target.value.split(':');
-
-        setSearchParams((searchParams) => {
-            searchParams.set('orderBy', orderBy);
-            searchParams.set('orderDir', orderDir);
-            return searchParams;
-        });
-    };
-
-    function onPageChange(page) {
-        setSearchParams((searchParams) => {
-            searchParams.set('page', page);
-            return searchParams;
-        });
-
+    function handlePageChange(page) {
+        handleSearchParamsChange({ page })
         document.documentElement.scrollTop = 530;
     };
 
@@ -59,32 +49,19 @@ function PostListPage(props) {
                 </section>
 
                 <section>
-                    <div className={styles.filter}>
-                        <div>
-                            <input ref={searchRef} type='text' name='title' className='font-sm' placeholder='Search'/>
-                            <button type='submit' className='font-sm' onClick={handleSearch}>Find</button>
-                        </div>
-                        <div>
-                            <select 
-                                name='sorting' 
-                                value={`${searchParams.get('orderBy')}:${searchParams.get('orderDir')}`}
-                                className='font-xs'
-                                onChange={(e) => handleSort(e)}
-                            >
-                                <option value='createdAt:asc'>Date of Creation (Asc)</option>
-                                <option value='createdAt:desc'>Date of Creation (Desc)</option>
-                                <option value='title:asc'>Title (Asc)</option>
-                                <option value='title:desc'>Title (Desc)</option>
-                            </select>
-                        </div>
-                    </div>                
+                    <SearchToolbar
+                        initialParams={{
+                            orderBy: searchParams.get('orderBy'),
+                            orderDir: searchParams.get('orderDir')
+                        }}
+                        sortOptions={sortingOptions}
+                        onParamChange={handleSearchParamsChange}
+                    />     
+
                     <div className={styles.cardGroup}>
                         {loading ? (
                             Array(3).fill().map((_, index) => (
-                                <div 
-                                    className={styles.cardContainer} 
-                                    key={index}
-                                > 
+                                <div key={index}> 
                                     <SkeletonCard />                                   
                                 </div>
                             )) 
@@ -112,7 +89,7 @@ function PostListPage(props) {
                             currentPage={Number(searchParams.get('page')) || 1}
                             totalPages={Math.ceil(total / 9)}
                             maxVisiblePageBtn={5}
-                            onPageChange={onPageChange}
+                            onPageChange={handlePageChange}
                         />
                     )}
                 </section>
