@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './SearchToolBar.module.css';
 
 function SearchToolbar({ initialParams, sortOptions=[], filterGroups=[], onParamChange }) {
-    const [searchValue, setSearchValue] = useState(initialParams.search);
+    const [searchValue, setSearchValue] = useState(initialParams.search || '');
 
     const handleSearchSubmit = (value) => {
         onParamChange({ search: value });

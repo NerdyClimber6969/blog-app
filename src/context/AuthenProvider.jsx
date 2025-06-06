@@ -22,9 +22,9 @@ function AuthenProvider({ children }) {
                 setLoading(false);
             },
             onError: (error) => {
-                if (error.details.failureReason === 'token expired' || error.details.failureReason === 'invalid token') {
+                if (error.details?.failureReason === 'token expired' || error.details?.failureReason === 'invalid token') {
                     handleLogout();
-                } else if (error.details.failureReason === 'token missing') {
+                } else if (error.details?.failureReason === 'token missing') {
                     setUser(null);
                     setIsAuthenticated(false);
                 };
@@ -60,7 +60,7 @@ function AuthenProvider({ children }) {
 
         if (isAuthenticated) {
             //Run every 5 minutes
-            timerId = setInterval(() => verifyToken, 1000 * 60 * 5); 
+            timerId = setInterval(verifyToken, 1000 * 60 * 1); 
         };
         
         return () => {
