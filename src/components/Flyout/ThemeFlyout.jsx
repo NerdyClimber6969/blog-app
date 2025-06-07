@@ -1,43 +1,30 @@
-import { useEffect, useState } from 'react';
 import Flyout from './Flyout.jsx';
-import DarkModeIcon from '../../icons/DarkModeIcon.jsx';
-import LightModeIcon from '../../icons/LightModeIcon.jsx';
+import { useTheme } from '../../context/ThemeProvider.jsx';
+import { DarkModeIcon, LightModeIcon } from '../../icons';
 
-function ThemeToggle(props) {
-    const getDefaultTheme = () => {
-        const isDark = window.matchMedia('prefers-color-scheme: dark').matches
-        const theme = isDark ? 'dark' : 'light';
-        return theme;
-    };
-
-    const [theme, setTheme] = useState(getDefaultTheme());
-
-    useEffect(() => {
-        const root = document.documentElement;
-        root.className = theme;
-        return;
-    }, [theme]);
+function ThemeFlyout(props) {
+    const { theme, handleSetTheme } = useTheme();
 
     return (
         <Flyout>
             <Flyout.Toggle iconRender={() => (
                     theme === 'dark' ? (
-                        <LightModeIcon className='svg-icon fill'/>
+                        <LightModeIcon/>
                     ) : (
-                        <DarkModeIcon className='svg-icon fill'/>
+                        <DarkModeIcon/>
                     )
             )}/>
             <Flyout.Menu>
                 <Flyout.Item 
-                    onClick={() => setTheme('light')}
+                    onClick={() => handleSetTheme('light')}
                 >
-                    <LightModeIcon className='svg-icon fill'/>
-                    <span>Light</span>
+                    <LightModeIcon/>
+                    <span>Light Mode</span>
                 </Flyout.Item>
                 <Flyout.Item 
-                    onClick={() => setTheme('dark')}
+                    onClick={() => handleSetTheme('dark')}
                 >
-                    <DarkModeIcon className='svg-icon fill'/>
+                    <DarkModeIcon/>
                     <span>Dark Mode</span>
                 </Flyout.Item>
             </Flyout.Menu>
@@ -45,4 +32,4 @@ function ThemeToggle(props) {
     );
 };
 
-export default ThemeToggle;
+export default ThemeFlyout;
