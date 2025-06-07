@@ -5,17 +5,35 @@ import Footer from '../components/Footer/Footer.jsx';
 import GuardedOutlet from '../components/GuardedOutlet/GuardedOutlet.jsx';
 import styles from './App.module.css';
 import AppProvider from '../context/AppProvider.jsx';
+import { useAuthen } from '../context/AuthenProvider.jsx';
+import StairLoader from '../components/StairLoader/StairLoader.jsx';
 
 function AppContent(props) {
+    const  { loading } = useAuthen();
+
     return (
-        <>  
-            <NotificationDisplayer/>
-            <div className={styles.appLayout}>
-                <Header />
-                <GuardedOutlet/>
-                <Footer />
+        loading ? (
+            <div className={styles.loadingLayout}>
+                <div>
+                    <StairLoader/>
+                    <p 
+                        className='font-sm' 
+                        style={{ marginTop: 'var(--spacing4)' }}
+                    >
+                        Loading...
+                    </p>
+                </div>
             </div>
-        </>
+        ) : (
+            <>  
+                <NotificationDisplayer/>
+                <div className={styles.appLayout}>
+                    <Header />
+                    <GuardedOutlet/>
+                    <Footer />
+                </div>
+            </>
+        )
     );
 };
 

@@ -51,7 +51,7 @@ function AuthenProvider({ children }) {
 
     // Initial check on page load
     useEffect(() => {
-        verifyToken();
+        setTimeout(verifyToken, 4000);
     }, []);
 
 
@@ -59,7 +59,7 @@ function AuthenProvider({ children }) {
         let timerId;
 
         if (isAuthenticated) {
-            //Run every 5 minutes
+            //Run every 1 minutes
             timerId = setInterval(verifyToken, 1000 * 60 * 1); 
         };
         
@@ -79,11 +79,7 @@ function AuthenProvider({ children }) {
             isAuthenticated,
             setIsAuthenticated
         }}> 
-            {loading ? (
-                <div>Loading</div>
-            ): (
-                children
-            )}
+            {children}
         </AuthenContext.Provider>
     );  
 };
