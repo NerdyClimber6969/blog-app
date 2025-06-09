@@ -3,7 +3,7 @@ import { useNotifications } from '../context/NotificationProvider.jsx';
 import API from '../services/apiService.js';
 
 function usePostsMetaData(searchParams) {
-    const [data, setData] = useState();
+    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const { handleApiCall } = useNotifications();
@@ -17,10 +17,11 @@ function usePostsMetaData(searchParams) {
                 notifyError: true,
                 onSuccess: (response) => {  
                     setData({ posts: response.posts, total: response.total });
-                    setLoading(false)
                 },
                 onError: (error) => setError(error),
             });
+
+            setLoading(false);
     }, []);
 
     useEffect(() => { 

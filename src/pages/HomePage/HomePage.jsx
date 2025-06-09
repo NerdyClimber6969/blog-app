@@ -4,12 +4,13 @@ import PostCard from '../../components/PostCard/PostCard.jsx';
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
 import Hero from '../../components/Hero/Hero.jsx';
 import Swiper from '../../components/Swiper/Swiper.jsx';
+import{ UnexpectedError, NotFoundError } from '../../components/Error';
 import styles from './HomePage.module.css';
 
-const SEARCH_PARAMS = new URLSearchParams({ page: 1, pageSize: 7, orderBy: 'createdAt', orderDir: 'desc' })
+const DEFAULT_SEARCH_PARAMS = new URLSearchParams({ page: 1, pageSize: 7, orderBy: 'createdAt', orderDir: 'desc' })
 
 function HomePage(props) {
-    const { posts, loading } = usePostsMetaData(SEARCH_PARAMS);
+    const { posts, error, loading } = usePostsMetaData(DEFAULT_SEARCH_PARAMS);
 
     return (
         <main>
@@ -34,25 +35,35 @@ function HomePage(props) {
 
                 <section>
                     <h2 className={`${styles.title} font-lg mb3`}>Recent Post</h2>
-                    {loading ? (
+                    {loading && (
                         <Swiper 
                             items={Array(3).fill().map((_, index) => (<SkeletonCard />))}
                             buttonDisabled={true}
                         />
-                    ) : (
-                        <Swiper
-                            items={posts.map((post) => (
-                                <PostCard
-                                    id={post.id}
-                                    title={post.title}
-                                    summary={post.summary}
-                                    author={post.author.username}
-                                    data={post.createdAt}
-                                    imgSrc='/fff.jpg'
-                                />
-                            ))}
-                            buttonDisabled={false}
-                        />
+                    )}
+
+                    {!loading && error && !posts && (
+                        <UnexpectedError/>
+                    )}
+
+                    {!loading && !error && posts && (
+                        posts.length > 0 ? (
+                            <Swiper
+                                items={posts.map((post) => (
+                                    <PostCard
+                                        id={post.id}
+                                        title={post.title}
+                                        summary={post.summary}
+                                        author={post.author.username}
+                                        data={post.createdAt}
+                                        imgSrc='/fff.jpg'
+                                    />
+                                ))}
+                                buttonDisabled={false}
+                            />
+                        ) : (
+                            <NotFoundError/>
+                        )
                     )}
                 </section>
             </div>

@@ -1,17 +1,20 @@
 import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
+import { useSearchParams } from 'react-router-dom';
+import { useMemo, useCallback } from 'react';
+import { updateSearchParams } from '../../utils.jsx';
+
 import PostCard from '../../components/PostCard/PostCard.jsx';
 import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
 import Hero from '../../components/Hero/Hero.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
-import styles from './PostListPage.module.css';
-import { useSearchParams } from 'react-router-dom';
-import { useMemo, useCallback } from 'react';
 import SearchToolbar from '../../components/SearchToolBar/SearchToolBar.jsx';
-import { updateSearchParams } from '../../utils.jsx';
+import { UnexpectedError, NotFoundError } from '../../components/Error';
+
+import styles from './PostListPage.module.css';
 
 function PostListPage(props) {
     const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
-    const { posts, total, loading } = usePostsMetaData(searchParams);
+    const { posts, error, total, loading } = usePostsMetaData(searchParams);
 
     const sortingOptions = useMemo(() => ([
         { value: 'createdAt:desc', label: 'Date of Creation (Desc)' },
@@ -30,6 +33,10 @@ function PostListPage(props) {
     function handlePageChange(page) {
         handleSearchParamsChange({ page })
         document.documentElement.scrollTop = 530;
+    };
+
+    function handleRetry() {
+        setSearchParams(new URLSearchParams(searchParams));
     };
 
     return (
@@ -56,42 +63,53 @@ function PostListPage(props) {
                         }}
                         sortOptions={sortingOptions}
                         onParamChange={handleSearchParamsChange}
-                    />     
+                    />    
 
-                    <div className={styles.cardGroup}>
-                        {loading ? (
-                            Array(3).fill().map((_, index) => (
+                    {!loading && error && !posts && (
+                        <UnexpectedError onRetry={handleRetry}/>
+                    )}
+
+                    {loading && (
+                        <div className={styles.cardGroup}>
+                            {Array(3).fill().map((_, index) => (
                                 <div key={index}> 
                                     <SkeletonCard />                                   
                                 </div>
-                            )) 
-                        ) : (
-                            posts.map((post) => (
-                                <PostCard
-                                    key={post.id}
-                                    id={post.id}
-                                    title={post.title}
-                                    summary={post.summary}
-                                    author={post.author.username}
-                                    date={new Date(post.createdAt).toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric'
-                                    })}
-                                    imgSrc='/fff.jpg'
+                            ))}
+                        </div>
+                    )}   
+                                     
+                    {!loading && !error && posts && (
+                        posts.length > 0 ? (
+                            <>
+                                <div className={styles.cardGroup}>
+                                    {posts.map((post) => (
+                                        <PostCard
+                                            key={post.id}
+                                            id={post.id}
+                                            title={post.title}
+                                            summary={post.summary}
+                                            author={post.author.username}
+                                            date={new Date(post.createdAt).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric'
+                                            })}
+                                            imgSrc='/fff.jpg'
+                                        />
+                                    ))}                           
+                                </div>
+                                <Pagination
+                                    currentPage={Number(searchParams.get('page')) || 1}
+                                    totalPages={Math.ceil(total / 9)}
+                                    maxVisiblePageBtn={5}
+                                    onPageChange={handlePageChange}
                                 />
-                            ))                            
-                        )}
-                    </div>
-
-                    {!loading && (
-                        <Pagination
-                            currentPage={Number(searchParams.get('page')) || 1}
-                            totalPages={Math.ceil(total / 9)}
-                            maxVisiblePageBtn={5}
-                            onPageChange={handlePageChange}
-                        />
-                    )}
+                            </>   
+                        ) : (
+                            <NotFoundError/>
+                        )
+                    )}                    
                 </section>
             </div>
         </main>
