@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import usePostsMetaData from '../../hook/usePostsMetaData.jsx';
-import PostCard from '../../components/PostCard/PostCard.jsx';
-import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
+import { PostCard, PostCardSkeleton } from '../../components/PostCard';
 import Hero from '../../components/Hero/Hero.jsx';
 import Swiper from '../../components/Swiper/Swiper.jsx';
 import{ UnexpectedError, NotFoundError } from '../../components/Error';
@@ -37,7 +36,7 @@ function HomePage(props) {
                     <h2 className={`${styles.title} font-lg mb3`}>Recent Post</h2>
                     {loading && (
                         <Swiper 
-                            items={Array(3).fill().map((_, index) => (<SkeletonCard />))}
+                            items={Array(3).fill().map((_, index) => (<PostCardSkeleton />))}
                             buttonDisabled={true}
                         />
                     )}

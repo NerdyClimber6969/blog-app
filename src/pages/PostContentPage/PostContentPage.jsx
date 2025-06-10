@@ -5,8 +5,8 @@ import { useAuthen } from '../../context/AuthenProvider.jsx';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 
-import PostContent from '../../components/PostContent/PostContent.jsx';
-import Comment from '../../components/Comment/Comment.jsx';
+import { PostContent, PostContentSkeleton } from '../../components/PostContent';
+import { Comment, CommentSkeleton } from '../../components/Comment';
 import NewCommentDialog from '../../components/NewCommentDialog/NewCommentDialog.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import { UnexpectedError, NotFoundError } from '../../components/Error';
@@ -95,30 +95,32 @@ function PostContentPage() {
     return (
         <main>
             <div className='mainLayout'>                                          
-                <div className={`${styles.post} mb7`}>                   
-                    {post.loading && (<p className='font-xs'>Loading post</p>)}
+                <div className={`${styles.postSection} mb7`}>                   
+                    {post.loading && (<PostContentSkeleton/>)}
                     {!post.loading && post.error && (<UnexpectedError mode='simple'/>)}                        
-                    {!post.loading && post.data && (
-                        <section>  
-                            <PostContent
-                                title={post.data.title}
-                                summary={post.data.summary}
-                                author={post.data.author.username}
-                                content={post.data.content}
-                                createdAt={post.data.createdAt}
-                                dislike={post.data.dislike}
-                                like={post.data.like}
-                            /> 
-                        </section> 
+                    {!post.loading && post.data && (                     
+                        <PostContent
+                            title={post.data.title}
+                            summary={post.data.summary}
+                            author={post.data.author.username}
+                            content={post.data.content}
+                            createdAt={post.data.createdAt}
+                            dislike={post.data.dislike}
+                            like={post.data.like}
+                        />                                                          
                     )}                                                                     
                 </div>
             
-                <div className={styles.comments}>
-                    {comments.loading && (<p className='font-xs'>Loading comments</p>)}
+                <div className={styles.commentSection}>
+                    {comments.loading && (
+                        <div>
+                            {Array(3).fill().map((_, index) => (<CommentSkeleton key={index}/>))}
+                        </div>
+                    )}
                     {!comments.loading && comments.error && (<UnexpectedError mode='simple'/>)}
                     {!comments.loading && comments.data && (
-                        <section>
-                            <div>
+                        <>
+                            <div className={styles.commentGroup}>
                                 {isDialogOpen && (
                                     <NewCommentDialog
                                         isOpen={isDialogOpen}
@@ -140,33 +142,32 @@ function PostContentPage() {
                                     )}
                                 </div>                                    
                                 {comments.data.length > 0 ? (
-                                    <>
-                                        <ol>
-                                            {comments.data.map((comment) => (
-                                                <li key={comment.id}>
-                                                    <Comment
-                                                        author={comment.post.author.username}
-                                                        createdAt={comment.createdAt}
-                                                        content={comment.content}
-                                                        like={comment.like}
-                                                        dislike={comment.dislike}
-                                                    />
-                                                </li>
-                                            ))}
-                                        </ol>
-                                        <Pagination 
-                                            currentPage={commentPage}
-                                            totalPages={Math.max(Math.ceil(comments.total / 10), 1)}
-                                            maxVisiblePageBtn={5}
-                                            onPageChange={handleCommentPageChange}
-                                        />
-                                    </>                                                                           
+                                    <ol>
+                                        {comments.data.map((comment) => (
+                                            <li key={comment.id}>
+                                                <Comment
+                                                    author={comment.post.author.username}
+                                                    createdAt={comment.createdAt}
+                                                    content={comment.content}
+                                                    like={comment.like}
+                                                    dislike={comment.dislike}
+                                                />
+                                            </li>
+                                        ))}
+                                    </ol>                                                                        
                                 ) : (
                                     <p className='font-xs'>No Comment Yet !!!</p>
                                 )}
-                            </div>                  
-                        
-                        </section>
+                            </div>
+                            {comments.data.length > 0 && (
+                                <Pagination 
+                                    currentPage={commentPage}
+                                    totalPages={Math.max(Math.ceil(comments.total / 10), 1)}
+                                    maxVisiblePageBtn={5}
+                                    onPageChange={handleCommentPageChange}
+                                />
+                            )} 
+                        </>                
                     )}
                 </div>
             </div>

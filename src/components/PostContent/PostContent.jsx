@@ -1,12 +1,13 @@
 import { calculateNumberOfDay } from '../../utils.jsx';
 import styles from './PostContent.module.css';
+import Card from '../Card/Card.jsx';
 
 function PostContent({ title, summary, author, content, createdAt, dislike, like, className }) {
     const numberOfDay = calculateNumberOfDay(new Date(), new Date(createdAt));
 
     return (
-        <article className={`${className}`}>
-            <header className={styles.header}>
+        <Card className={className}>
+            <Card.Header className={styles.header}>
                 <div>
                     <h2 className='font-xl bold mb2'>{title}</h2>
                     <p className='font-md'>{summary}</p>
@@ -20,13 +21,15 @@ function PostContent({ title, summary, author, content, createdAt, dislike, like
                         <li>{like} likes</li>
                         <li>{dislike} dislikes</li>
                     </ul>
-                </div>
-            </header>
-            <div 
-                className={styles.content}
-                dangerouslySetInnerHTML={ {__html: content} }
-            />
-        </article>
+                </div>                
+            </Card.Header>
+            <Card.MainContent>
+                <div 
+                    className={styles.content}
+                    dangerouslySetInnerHTML={ {__html: content} }
+                />
+            </Card.MainContent>
+        </Card>
     );
 };
 

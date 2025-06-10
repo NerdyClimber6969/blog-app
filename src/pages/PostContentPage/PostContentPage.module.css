@@ -1,28 +1,21 @@
-.post {
-    display: flex;
-    justify-content: center;
-
-    > section {
-        max-width: 680px;
-        width: 100%;
-    }
+.postSection {
+    max-width: 680px;
+    width: 100%;
+    margin: auto;
 }
 
-.comments {
-    display: flex;
-    justify-content: center;
+.commentSection {
+    max-width: 680px;
+    width: 100%;
+    margin: auto;
 
-    > section {
-        max-width: 680px;
-        width: 100%;
-
-        > div:first-child {
-            padding: var(--spacing4);
-            border-radius: var(--radius-box);
-            background-color: var(--color-base-100);
-            margin-bottom: var(--spacing4);
-        }
+    > .commentGroup {
+        padding: var(--spacing4);
+        border-radius: var(--radius-box);
+        background-color: var(--color-base-100);
+        margin-bottom: var(--spacing4);
     }
+    
 
     .header {
         display: flex;

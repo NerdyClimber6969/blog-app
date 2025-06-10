@@ -1,0 +1,16 @@
+.commentSkeleton {
+    padding: var(--spacing4);
+    border-radius: var(--radius-box);
+    background-color: var(--color-base-100);
+
+    > div:first-child {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    > div:last-child {
+        display: flex;
+        gap: var(--spacing3)
+    }
+}

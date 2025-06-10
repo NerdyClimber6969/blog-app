@@ -2,6 +2,10 @@
     padding-bottom: var(--spacing3);
     margin-bottom: var(--spacing6);
     border-bottom: 1px solid var(--light-dark);
+    
+    h2, p {
+        overflow-wrap: break-word;
+    }
 
     >div:nth-child(2) {
         display: flex;
@@ -29,7 +33,8 @@
 
 .content {
     font-family: 'Fira Sans, sans-serif';
-
+    overflow-wrap: break-word;
+    
     /* List styles */
     & ul {
         list-style: disc;

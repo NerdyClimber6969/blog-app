@@ -3,8 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useMemo, useCallback } from 'react';
 import { updateSearchParams } from '../../utils.jsx';
 
-import PostCard from '../../components/PostCard/PostCard.jsx';
-import SkeletonCard from '../../components/SkeletonCard/SkeletonCard.jsx';
+import { PostCard, PostCardSkeleton } from '../../components/PostCard';
 import Hero from '../../components/Hero/Hero.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import SearchToolbar from '../../components/SearchToolBar/SearchToolBar.jsx';
@@ -73,7 +72,7 @@ function PostListPage(props) {
                         <div className={styles.cardGroup}>
                             {Array(3).fill().map((_, index) => (
                                 <div key={index}> 
-                                    <SkeletonCard />                                   
+                                    <PostCardSkeleton />                                   
                                 </div>
                             ))}
                         </div>
