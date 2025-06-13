@@ -19,7 +19,6 @@ function AuthenProvider({ children }) {
             onSuccess: (response) => {
                 setUser(response.username);
                 setIsAuthenticated(true);
-                setLoading(false);
             },
             onError: (error) => {
                 if (error.details?.failureReason === 'token expired' || error.details?.failureReason === 'invalid token') {
@@ -27,14 +26,11 @@ function AuthenProvider({ children }) {
                 } else if (error.details?.failureReason === 'token missing') {
                     setUser(null);
                     setIsAuthenticated(false);
-                };
-
-                setLoading(false);
-                return;
+                };                
             }
         });
 
-        return;
+        setLoading(false);
     };
 
     async function handleLogout(path='/', message='You have been safely logged out.') {
@@ -51,7 +47,8 @@ function AuthenProvider({ children }) {
 
     // Initial check on page load
     useEffect(() => {
-        setTimeout(verifyToken, 4000);
+        setLoading(true);
+        verifyToken();
     }, []);
 
 

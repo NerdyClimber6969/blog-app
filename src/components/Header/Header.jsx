@@ -9,13 +9,13 @@ function Header(props) {
     return (
         <header className={styles.header}>
             <div>
-                <span className='font-md bold'><Link to='/'>DevBlog</Link></span>
+                <span className='font-md bold'><Link to='/'>MyBlog</Link></span>
             </div>
             <nav className={styles.navBar}>
                 <ul>
                     {user ? (
                         <>  
-                            <li className='font-sm'><a href='http://localhost:3001/'>Studio</a></li>
+                            <li className='font-sm'><a href={import.meta.env.VITE_STUDIO_URL}>Studio</a></li>
                             <li className='font-sm'><Link to='/posts' state={{ reset: true }}>Posts</Link></li>
                             <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>                           
                         </>

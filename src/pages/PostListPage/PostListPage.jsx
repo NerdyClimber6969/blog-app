@@ -44,7 +44,7 @@ function PostListPage(props) {
                 <section className='mb8'>
                     <Hero 
                         title='Blog'
-                        text='Discover stories from web development community'
+                        text='Discover insights and stories from the world'
                     >
                         <Hero.Image
                             src='/blog-header_480.png'

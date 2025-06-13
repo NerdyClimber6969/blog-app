@@ -16,8 +16,8 @@ function HomePage(props) {
             <div className='mainLayout'>
                 <section className='mb8'>
                     <Hero
-                        title='Welcome to WebBlog'
-                        text='Discover insights, tutorials, and stories from the world of web development'
+                        title='Welcome to MyBlog'
+                        text='Discover insights and stories from the world'
                     >   
                         <Hero.Action>
                             <Link to='/posts'>
@@ -25,9 +25,9 @@ function HomePage(props) {
                             </Link>
                         </Hero.Action>
                         <Hero.Image
-                            src='/web-development1.png'
+                            src='/my-blog.avif'
                             size='medium'
-                            alr='web development'
+                            alr='MyBlog hero image'
                         />
                     </Hero>
                 </section>
@@ -54,7 +54,11 @@ function HomePage(props) {
                                         title={post.title}
                                         summary={post.summary}
                                         author={post.author.username}
-                                        data={post.createdAt}
+                                        date={new Date(post.createdAt).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
                                         imgSrc='/fff.jpg'
                                     />
                                 ))}

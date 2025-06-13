@@ -86,6 +86,7 @@ function PostContentPage() {
 
         };
 
+        document.documentElement.scrollTop = 100;
         fetchPostPageData();
         return;
     }, []);

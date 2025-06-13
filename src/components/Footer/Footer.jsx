@@ -5,8 +5,8 @@ function Footer() {
         <footer className={styles.footer}>
             <div>
                 <aside>
-                    <h3 className='font-sm'>DevBlog</h3>
-                    <p className='font-xs'>Discover insights, tutorials, and stories from the world of web development</p>
+                    <h3 className='font-sm'>MyBlog</h3>
+                    <p className='font-xs'>Discover insights and stories from the world</p>
                 </aside>
             </div>
             <div className={styles.navBarLayout}>

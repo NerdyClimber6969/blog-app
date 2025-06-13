@@ -9,6 +9,7 @@ function usePostsMetaData(searchParams) {
     const { handleApiCall } = useNotifications();
 
     const handleFetchPosts = useCallback(async (params=null) => {
+            setLoading(true);
             setData(null);
             setError(null);
 
@@ -25,9 +26,7 @@ function usePostsMetaData(searchParams) {
     }, []);
 
     useEffect(() => { 
-        setLoading(true);
-        const timer = setTimeout(() => handleFetchPosts(searchParams), 2 * 1000);
-        return () => clearTimeout(timer);
+        handleFetchPosts(searchParams);
     }, [searchParams]);
 
     return { 

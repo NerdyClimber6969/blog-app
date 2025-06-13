@@ -9,7 +9,7 @@ function LoginPage(props) {
                     <section className={styles.heroSection}>
                         <h1 className='font-hero mb5'>Login</h1>
                         <div>
-                            <span className='font-md'>to continue to DevBlog</span>
+                            <span className='font-md'>to continue to MyBlog</span>
                         </div>
                     </section>
                     <section className={styles.formSection}>

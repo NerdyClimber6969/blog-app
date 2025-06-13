@@ -9,7 +9,7 @@ function SignUpPage(props) {
                     <section className={styles.heroSection}>
                         <h1 className='font-hero mb5'>Sign Up</h1>
                         <div>
-                            <span className='font-md'>to start using DevBlog</span>
+                            <span className='font-md'>to start using MyBlog</span>
                         </div>
                     </section>
                     <section className={styles.formSection}>
