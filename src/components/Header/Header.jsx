@@ -13,13 +13,15 @@ function Header(props) {
             </div>
             <nav className={styles.navBar}>
                 <ul>
-                    <li className='font-sm'><Link to='/posts' state={{ reset: true }}>Posts</Link></li>
                     {user ? (
-                        <>
-                            <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>
+                        <>  
+                            <li className='font-sm'><a href='http://localhost:3001/'>Studio</a></li>
+                            <li className='font-sm'><Link to='/posts' state={{ reset: true }}>Posts</Link></li>
+                            <li className='font-sm'><Link onClick = {() => handleLogout()}>Logout</Link></li>                           
                         </>
                     ) : (    
-                        <>         
+                        <>   
+                            <li className='font-sm'><Link to='/posts' state={{ reset: true }}>Posts</Link></li>      
                             <li className='font-sm'><Link to='/login'>Login</Link></li>
                             <li className='font-sm'><Link to='/sign-up'>Sign Up</Link></li>
                         </>   
