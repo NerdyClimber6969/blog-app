@@ -4,11 +4,13 @@ import LoginPage from './pages/LoginPage/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage/SignUpPage.jsx';
 import PostListPage from './pages/PostListPage/PostListPage.jsx';
 import PostContentPage from './pages/PostContentPage/PostContentPage.jsx';
+import { NotFoundError } from "./components/Error";
 
 const routes = [
     {
       path: '/',
-      element: <App />,
+      element: <App />, 
+      errorElement: <NotFoundError />,
       children: [
         { index: true, element: <HomePage /> },
         { path: 'login', element: <LoginPage /> },
