@@ -52,7 +52,7 @@ function PostContentPage() {
         setCommentState({ ...commentState, loading: true });
         const searchParams = new URLSearchParams({ ...BASE_SEARCH_PARAMS, postId, page });
 
-        API.getComments(searchParams)
+        API.getComments(postId, searchParams)
             .then((result) => {
                 setCommentState({ data: result.comments, error: null, loading: false, total: result.total })
                 setCommentPage(page);
@@ -66,7 +66,7 @@ function PostContentPage() {
 
             const [post, comments] = await Promise.allSettled([
                 API.getPost(postId).then((result) => ({ data: result.post })),
-                API.getComments(searchParams).then((result) => ({ data: result.comments, total: result.total }))
+                API.getComments(postId, searchParams).then((result) => ({ data: result.comments, total: result.total }))
             ]);
 
             const stateSetterMap = { post: setPostState, comments: setCommentState };
