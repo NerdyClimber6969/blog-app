@@ -23,7 +23,7 @@
         align-items: center;
     }
 
-    > div:last-child {
+    > div:last-child  {
         display: flex;
         justify-content: center;
         gap: var(--spacing3)
