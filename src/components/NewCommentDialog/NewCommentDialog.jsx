@@ -1,16 +1,31 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import Input from '../Input/Input.jsx';
 import Dialog from '../Dialog/Dialog.jsx';
+import SpinningLoader  from '../SpinningLoader/SpinningLoader.jsx';
+import styles from './NewCommentDialog.module.css'
 
 function NewCommentDialog({ isOpen, onSubmit, onClose }) {
     const [value, setValue] = useState('');
-    const formRef = useRef(null);
     const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    function handleSubmit(e, value) {
+    const validateInput = useCallback((newValue) => newValue !== '', []);
+
+    function handleInputChange(e) {
+        const newValue = e.target.value;
+        setValue(newValue);
+        setSubmitBtnDisabled(!validateInput(newValue));
+    };
+
+    async function handleSubmit(e) {
+        if (!validateInput()) return;
         e.preventDefault();
+
+        setLoading(true);
         setValue('');
-        onSubmit(value);
+        await onSubmit(value);
+        setLoading(false);
+        
         onClose();
         return;
     };
@@ -22,46 +37,38 @@ function NewCommentDialog({ isOpen, onSubmit, onClose }) {
         return;
     };
 
-    useEffect(() => {   
-        const isValidForm = () => {
-            const inputs = Array.from(formRef.current.querySelectorAll('input'));
-            for (const input of inputs) {
-                if (!input.validity.valid) {
-                    return false;
-                };
-            };
-
-            return true;
-        };
-
-        const isValid = isValidForm();
-        setSubmitBtnDisabled(!isValid)
-
-        return;
-    }, [value]);
-
     return (
         <Dialog
+            className={styles.newCommentDialog}
             isOpen={isOpen}
             title='Add New Comment'
             confirmBtn='Add Comment'
             cancelBtn='Cancel'
+            cancelBtnDisabled={loading}
             onConfirm={(e) => handleSubmit(e, value)}
+            confirmBtnDisabled={submitBtnDisabled || loading}
+            showCloseButton={!loading}
             onClose={handleClose}
-            confirmBtnDisabled={submitBtnDisabled}
         >
-            <form ref={formRef}>
-                <Input
-                    id='comment'
-                    name='comment'
-                    label='Comment'
-                    errorMessage='Please input your comment'
-                    onChange={(e) => setValue(e.target.value)}
-                    value={value}
-                    type='text'
-                    required
-                />
-            </form>
+            {loading ? (
+                <div className={styles.loaderContainer}>
+                    <SpinningLoader size='medium'/>
+                </div>
+            ) : (
+                <form>
+                    <Input
+                        label='Comment'
+                        id='comment'
+                        name='comment'
+                        type='text'
+                        placeholder='Comment'
+                        errorMessage='Please input your comment'
+                        value={value}
+                        required
+                        onChange={(e) => handleInputChange(e)}
+                    />
+                </form>
+            )}
         </Dialog>
     );
 };
