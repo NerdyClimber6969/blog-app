@@ -1,30 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuthen } from '../../context/AuthenProvider.jsx';
-import { useNotifications } from '../../context/NotificationProvider.jsx';
 import Input from '../Input/Input.jsx';
-import API from '../../services/apiService.js';
 
 function LoginForm(props) {
-    const navigate = useNavigate()
-    const { setUser, setIsAuthenticated } =  useAuthen();
-    const { handleApiCall } = useNotifications();
+    const { handleLogin } =  useAuthen();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    async function handleLogin(e, username, password) {
-        e.preventDefault();
-        
-        await handleApiCall(() => API.login(username, password), {
-            successMessage: 'Login successfully',
-            onSuccess: () => {
-                setUser(username);
-                setIsAuthenticated(true);
-                navigate('/');
-                return;
-            }
-        });
-    };
 
     return (
         <>
@@ -49,7 +30,7 @@ function LoginForm(props) {
                     errorMessage='Password required'
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type='submit' onClick={(e) => handleLogin(e, username, password)}>Sign In</button>
+                <button type='button' onClick={(e) => handleLogin(username, password)}>Sign In</button>
             </form>
         </>
     );

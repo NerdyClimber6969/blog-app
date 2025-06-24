@@ -9,23 +9,26 @@ function AuthenProvider({ children }) {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [logoutTimer, setLogoutTimer] = useState(null);
     const { handleApiCall } = useNotifications();
     const navigate = useNavigate();
 
     const verifyToken = async () => {
+        setLoading(true);
+
         await handleApiCall(() => API.verify(), {
             notifySuccess: false,
             notifyError: false,
             onSuccess: (response) => {
                 setUser(response.username);
                 setIsAuthenticated(true);
+                scheduleLogout(response.exp);
             },
             onError: (error) => {
                 if (error.details?.failureReason === 'token expired' || error.details?.failureReason === 'invalid token') {
                     handleLogout();
                 } else if (error.details?.failureReason === 'token missing') {
-                    setUser(null);
-                    setIsAuthenticated(false);
+                    handleLogout(null, null);
                 };                
             }
         });
@@ -33,39 +36,48 @@ function AuthenProvider({ children }) {
         setLoading(false);
     };
 
-    async function handleLogout(path='/', message='You have been safely logged out.') {
-        await handleApiCall(async () => API.logout(), {
+    async function handleLogout(path='/', message='You have been safely logged out.', ) {
+        await handleApiCall(() => API.logout(), {
             successMessage: message,
             onSuccess: () => {
-                setUser(null);
+                setUser(null);               
                 setIsAuthenticated(false);
-                navigate(path);
+
+                clearTimeout(logoutTimer)
+                setLogoutTimer(null);
+
+                if (!path || path === '') return;  
+                navigate(path);     
+                                          
                 return;
             }
         });
     };
 
+    async function handleLogin(username, password) {        
+        await handleApiCall(() => API.login(username, password), {
+            successMessage: 'Login successfully',
+            onSuccess: (response) => {
+                setUser(response.username);
+                setIsAuthenticated(true);
+                scheduleLogout(response.exp);
+                navigate('/');
+                return;
+            }
+        });
+    };
+
+    function scheduleLogout(exp) {
+        const timeRemaining = exp - Date.now();
+
+        if (timeRemaining > 0 && !logoutTimer) {
+            const timer = setTimeout(() => { handleLogout() }, timeRemaining);
+            setLogoutTimer(timer);
+        };
+    };
+
     // Initial check on page load
-    useEffect(() => {
-        setLoading(true);
-        verifyToken();
-    }, []);
-
-
-    useEffect(() => {
-        let timerId;
-
-        if (isAuthenticated) {
-            //Run every 1 minutes
-            timerId = setInterval(verifyToken, 1000 * 60 * 1); 
-        };
-        
-        return () => {
-            if (timerId) {
-                clearInterval(timerId);
-            };
-        };
-    }, [isAuthenticated]);
+    useEffect(() => {verifyToken()}, []);
 
     return (
         <AuthenContext.Provider value={{
@@ -74,7 +86,9 @@ function AuthenProvider({ children }) {
             handleLogout,
             loading,
             isAuthenticated,
-            setIsAuthenticated
+            setIsAuthenticated,
+            scheduleLogout,
+            handleLogin
         }}> 
             {children}
         </AuthenContext.Provider>
