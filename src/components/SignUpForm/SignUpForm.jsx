@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../context/NotificationProvider.jsx';
 import Input from '../Input/Input.jsx';
@@ -13,6 +13,14 @@ function SignUpForm(props) {
         confirm: ''
     };
 
+    const defaultValidity = {        
+        firstName: false, 
+        lastName: false, 
+        username: false,
+        password: false,
+        confirm: false
+    };
+
     const defaultValidationMessage = {
         firstName:'i.e. Ben', 
         lastName:'i.e. Wong', 
@@ -24,33 +32,26 @@ function SignUpForm(props) {
     const navigate = useNavigate()
     const { handleApiCall } = useNotifications();
     const [formData, setFormData] = useState(defaultFormData);
+    const [inputValidity, setInputValidty] = useState(defaultValidity)
     const [validationMessage, setValidationMessage] = useState(defaultValidationMessage);
-    const [submitBtnDisabled, setSubmitBtnDisabled] = useState(true);
-    const formRef = useRef(null);
 
-    useEffect(() => {   
-        const isValidForm = () => {
-            const inputs = Array.from(formRef.current.querySelectorAll('input'));
-            for (const input of inputs) {
-                if (!input.validity.valid) {
-                    return false;
-                };
-            };
-
-            return true;
+    function isSubmitBtnDisabled() {
+        for (const isInputValid of Object.values(inputValidity)) {
+            if (!isInputValid) return true
         };
 
-        const isValid = isValidForm();
-        setSubmitBtnDisabled(!isValid)
-
-        return;
-    }, [formData]);
+        return false;
+    };
 
     function handleFormUpdate(e) {
         const key = e.target.id;
         const value = e.target.value;
+        const newInputValidty = { ...inputValidity, [key]: e.target.validity.valid }
 
-        return setFormData({...formData, [key]: value});
+        setInputValidty(newInputValidty);
+        setFormData({...formData, [key]: value});
+
+        return;
     };
 
     async function handleSignUp(e, formData) {
@@ -74,7 +75,7 @@ function SignUpForm(props) {
 
     return (
         <>
-            <form className='sign-up-form' ref={formRef} novalidate>
+            <form className='sign-up-form' novalidate>
                 <Input
                     label='First Name'
                     type='text'
@@ -137,7 +138,7 @@ function SignUpForm(props) {
                 <button 
                     type='submit' 
                     onClick={(e) => handleSignUp(e, formData)}
-                    disabled={submitBtnDisabled}
+                    disabled={isSubmitBtnDisabled()}
                 >
                     Sign Up
                 </button>
