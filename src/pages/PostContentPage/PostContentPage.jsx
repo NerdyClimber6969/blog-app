@@ -9,7 +9,7 @@ import { PostContent, PostContentSkeleton } from '../../components/PostContent';
 import { Comment, CommentSkeleton } from '../../components/Comment';
 import NewCommentDialog from '../../components/NewCommentDialog/NewCommentDialog.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
-import { UnexpectedError, NotFoundError } from '../../components/Error';
+import { UnexpectedError, PageNotFoundError } from '../../components/Error';
 
 import styles from './PostContentPage.module.css';
 import btnStyles from '../../components/Button/Button.module.css';
@@ -95,7 +95,7 @@ function PostContentPage() {
         return (
             <main>
                 <div className='mainLayout'>
-                    <NotFoundError/>
+                    <PageNotFoundError/>
                 </div>
             </main>            
         );

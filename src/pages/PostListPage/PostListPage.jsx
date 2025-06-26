@@ -7,7 +7,7 @@ import { PostCard, PostCardSkeleton } from '../../components/PostCard';
 import Hero from '../../components/Hero/Hero.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import SearchToolbar from '../../components/SearchToolBar/SearchToolBar.jsx';
-import { UnexpectedError, NotFoundError } from '../../components/Error';
+import { UnexpectedError, ErrorMessage } from '../../components/Error';
 
 import styles from './PostListPage.module.css';
 
@@ -106,7 +106,10 @@ function PostListPage(props) {
                                 />
                             </>   
                         ) : (
-                            <NotFoundError/>
+                            <ErrorMessage 
+                                message='No post found'
+                                variant='info'
+                            />
                         )
                     )}                    
                 </section>

@@ -1,6 +1,6 @@
-import styles from './NotFoundError.module.css';
+import styles from './PageNotFoundError.module.css';
 
-function NotFoundError() {
+function PageNotFoundError() {
     return (
         <div className={styles.error}>
             <p className='font-hero mb1 bold'>404</p>
@@ -10,4 +10,4 @@ function NotFoundError() {
     );
 };
 
-export default NotFoundError;
+export default PageNotFoundError;
