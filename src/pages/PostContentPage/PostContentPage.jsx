@@ -155,7 +155,7 @@ function PostContentPage() {
                                         {commentState.data.map((comment) => (
                                             <li key={comment.id}>
                                                 <Comment
-                                                    author={comment.post.author.username}
+                                                    author={comment.author.username}
                                                     createdAt={comment.createdAt}
                                                     content={comment.content}
                                                     like={comment.like}
