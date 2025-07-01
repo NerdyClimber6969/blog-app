@@ -11,8 +11,10 @@ import { UnexpectedError, ErrorMessage } from '../../components/Error';
 
 import styles from './PostListPage.module.css';
 
+const PAGE_SIZE = 9;
+
 function PostListPage(props) {
-    const [searchParams, setSearchParams] = useSearchParams({ page: 1, orderBy: 'createdAt', orderDir: 'desc' });
+    const [searchParams, setSearchParams] = useSearchParams({ page: 1, pageSize: PAGE_SIZE, orderBy: 'createdAt', orderDir: 'desc' });
     const { posts, error, total, loading } = usePostsMetaData(searchParams);
 
     const sortingOptions = useMemo(() => ([
@@ -100,7 +102,7 @@ function PostListPage(props) {
                                 </div>
                                 <Pagination
                                     currentPage={Number(searchParams.get('page')) || 1}
-                                    totalPages={Math.ceil(total / 9)}
+                                    totalPages={Math.ceil(total / PAGE_SIZE)}
                                     maxVisiblePageBtn={5}
                                     onPageChange={handlePageChange}
                                 />
