@@ -3,8 +3,8 @@
 A blogging app built with React, where users can discover insightful articles and interact with authors.
 
 This app has two related repositories:
-- [**Blog API**](https://github.com/NerdyClimber6969/blog-api) - A RESTful API from which this app **fetches post and comment data**.
-- [**Blog Studio**](https://github.com/NerdyClimber6969/blog-studio) - for users to **manage their posts and comments**.
+- [**Blog API**](https://github.com/nickyuencm117/blog-api) - A RESTful API from which this app **fetches post and comment data**.
+- [**Blog Studio**](https://github.com/nickyuencm117/blog-studio) - for users to **manage their posts and comments**.
 
 # Table of Contents
 - [Live Demo](#live-demo)
@@ -66,7 +66,7 @@ To access protected endpoints, clients must include the `accessToken` cookie in 
 # Getting Started
 1. Clone this repository
 ```
-git clone https://github.com/NerdyClimber6969/blog-app.git
+git clone https://github.com/nickyuencm117/blog-app.git
 cd blog-app
 ```
 
